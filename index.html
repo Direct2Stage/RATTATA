@@ -1,0 +1,420 @@
+<!DOCTYPE html>
+<html lang="nl" class="scroll-smooth">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RATTATA! | De Ultieme Doe Maar Tribute Experience</title>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,800;0,900;1,400;1,700&family=Permanent+Marker&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        'neon-pink': '#ff007f',
+                        'neon-green': '#00ff66',
+                        'dark-bg': '#050505',
+                        'card-bg': '#121212',
+                        'border-dark': '#222222'
+                    },
+                    fontFamily: {
+                        'brand': ['"Permanent Marker"', 'cursive'],
+                        'sans': ['Montserrat', 'sans-serif']
+                    }
+                }
+            }
+        }
+    </script>
+
+    <style>
+        body {
+            background-color: #050505;
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            overflow-x: hidden;
+        }
+
+        /* Modern Neon Effects */
+        .neon-text-pink {
+            text-shadow: 0 0 10px rgba(255, 0, 127, 0.8), 0 0 25px rgba(255, 0, 127, 0.5);
+        }
+        .neon-text-green {
+            text-shadow: 0 0 10px rgba(0, 255, 102, 0.8), 0 0 25px rgba(0, 255, 102, 0.5);
+        }
+        .neon-border-pink {
+            box-shadow: 0 0 15px rgba(255, 0, 127, 0.5), inset 0 0 15px rgba(255, 0, 127, 0.2);
+        }
+        .neon-border-green {
+            box-shadow: 0 0 15px rgba(0, 255, 102, 0.5), inset 0 0 15px rgba(0, 255, 102, 0.2);
+        }
+        .neon-image-glow {
+            filter: drop-shadow(0 0 15px rgba(0, 255, 102, 0.3)) drop-shadow(0 0 25px rgba(255, 0, 127, 0.3));
+        }
+
+        /* Ska Checkerboard Accent Line */
+        .ska-checker {
+            background-image: linear-gradient(45deg, #111 25%, transparent 25%), 
+                              linear-gradient(-45deg, #111 25%, transparent 25%), 
+                              linear-gradient(45deg, transparent 75%, #111 75%), 
+                              linear-gradient(-45deg, transparent 75%, #111 75%);
+            background-size: 16px 16px;
+            background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+        }
+    </style>
+</head>
+<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-neon-pink selection:text-black">
+
+    <!-- Announcement Banner -->
+    <div class="bg-gradient-to-r from-neon-pink via-purple-900 to-neon-green text-black font-extrabold py-2.5 px-4 text-center text-sm md:text-base sticky top-0 z-50 shadow-md border-b border-white/20">
+        <div class="container mx-auto flex items-center justify-center space-x-2">
+            <span class="bg-black text-neon-green px-2 py-0.5 rounded text-xs uppercase tracking-widest font-black border border-neon-green">UPDATE</span>
+            <span class="text-white font-extrabold uppercase tracking-wide">Toe Maar Experience wordt <span class="text-neon-green font-brand text-xl underline decoration-neon-pink underline-offset-4">RATTATA!</span></span>
+            <i class="fa-solid fa-bolt text-yellow-300 animate-pulse"></i>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav class="bg-black/90 backdrop-blur-md border-b border-zinc-800 sticky top-[41px] z-40">
+        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
+            <a href="#" class="font-brand text-3xl md:text-4xl text-neon-pink hover:text-neon-pink/90 transition tracking-wider">
+                RATTATA<span class="text-neon-green">!</span>
+            </a>
+
+            <!-- Desktop Links -->
+            <div class="hidden md:flex items-center space-x-8 text-sm font-bold uppercase tracking-wider">
+                <a href="#about" class="text-gray-300 hover:text-neon-green transition">Over De Band</a>
+                <a href="#agenda" class="text-neon-green hover:text-neon-pink transition flex items-center gap-1.5"><i class="fa-regular fa-calendar-alt"></i> Live Agenda</a>
+                <a href="#band" class="text-gray-300 hover:text-neon-pink transition">Muzikanten</a>
+                <a href="#contact" class="px-4 py-2 bg-neon-pink hover:bg-neon-pink/80 text-white rounded-xl transition shadow-lg shadow-neon-pink/30 flex items-center gap-2">
+                    <i class="fa-regular fa-envelope"></i> Boeken
+                </a>
+            </div>
+
+            <!-- Mobile Menu Button -->
+            <button id="menu-toggle" class="md:hidden text-2xl text-neon-green focus:outline-none" aria-label="Menu">
+                <i class="fa-solid fa-bars"></i>
+            </button>
+        </div>
+
+        <!-- Mobile Menu Dropdown -->
+        <div id="mobile-menu" class="hidden md:hidden bg-zinc-950 border-b border-zinc-800 px-6 py-4 space-y-4 text-center font-bold uppercase tracking-wider text-sm">
+            <a href="#about" class="block text-gray-300 hover:text-neon-green py-2">Over De Band</a>
+            <a href="#agenda" class="block text-neon-green hover:text-neon-pink py-2">Live Agenda</a>
+            <a href="#band" class="block text-gray-300 hover:text-neon-pink py-2">Muzikanten</a>
+            <a href="#contact" class="block py-2 text-neon-pink"><i class="fa-regular fa-envelope mr-1"></i> Contact & Boekingen</a>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="relative pt-10 pb-16 md:pt-16 md:pb-20 overflow-hidden border-b border-zinc-900">
+        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-neon-pink/15 rounded-full blur-3xl pointer-events-none"></div>
+        <div class="absolute bottom-10 right-10 w-80 h-80 bg-neon-green/10 rounded-full blur-3xl pointer-events-none"></div>
+
+        <div class="container mx-auto px-4 text-center relative z-10">
+            <div class="mb-6">
+                <span class="inline-block bg-zinc-900 text-neon-green border border-neon-green/40 px-4 py-1.5 rounded-full text-xs md:text-sm font-bold uppercase tracking-widest mb-4">
+                    De Ultieme Doe Maar Tribute Experience
+                </span>
+                <h1 class="font-brand text-5xl md:text-7xl lg:text-8xl text-white tracking-wide">
+                    RATTATA<span class="text-neon-pink">!</span>
+                </h1>
+                <p class="text-zinc-400 mt-2 text-lg md:text-xl font-medium max-w-2xl mx-auto">
+                    Even terug naar <span class="text-neon-green font-bold">'83</span>!
+                </p>
+            </div>
+
+            <!-- Band Photo (1025x579) -->
+            <div class="max-w-4xl mx-auto my-8 relative group">
+                <div class="absolute -inset-1 bg-gradient-to-r from-neon-pink via-purple-600 to-neon-green rounded-3xl blur opacity-70 group-hover:opacity-100 transition duration-500"></div>
+                <div class="relative bg-black rounded-3xl overflow-hidden border-2 border-zinc-800">
+                    <img 
+                        src="RATTATA.jpg" 
+                        alt="RATTATA! Doe Maar Tribute Band" 
+                        class="w-full h-auto object-cover aspect-[1025/579] neon-image-glow transform hover:scale-[1.01] transition duration-500"
+                        onerror="this.onerror=null; this.src='https://placehold.co/1025x579/111111/ff007f?text=RATTATA!+Doe+Maar+Tribute+Band';"
+                    />
+                </div>
+            </div>
+
+            <div class="flex flex-wrap items-center justify-center gap-4 mt-8">
+                <a href="#agenda" class="px-8 py-4 bg-neon-green hover:bg-neon-green/90 text-black font-extrabold rounded-2xl transition duration-300 shadow-lg shadow-neon-green/20 flex items-center gap-3">
+                    <i class="fa-solid fa-ticket text-lg"></i>
+                    <span>LIVE AGENDA</span>
+                </a>
+                <a href="#contact" class="px-8 py-4 bg-neon-pink hover:bg-neon-pink/90 text-white font-extrabold rounded-2xl transition duration-300 shadow-lg shadow-neon-pink/30 flex items-center gap-3">
+                    <i class="fa-regular fa-envelope text-lg"></i>
+                    <span>BOEK RATTATA!</span>
+                </a>
+            </div>
+        </div>
+    </header>
+
+    <div class="h-4 ska-checker border-y border-zinc-800"></div>
+
+    <!-- Bio Section -->
+    <section id="about" class="py-16 md:py-24 bg-dark-bg relative">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="text-center mb-10">
+                <span class="text-neon-pink text-xs font-bold uppercase tracking-widest bg-neon-pink/10 border border-neon-pink/30 px-3 py-1 rounded-full">
+                    Brabants Nederpop Geweld
+                </span>
+                <h2 class="font-brand text-3xl md:text-5xl text-white mt-4">
+                    OVER <span class="text-neon-green">RATTATA!</span>
+                </h2>
+            </div>
+
+            <div class="bg-card-bg p-8 md:p-12 rounded-3xl border border-zinc-800 space-y-6 text-zinc-300 text-base md:text-lg leading-relaxed shadow-xl">
+                <p>
+                    <strong class="text-white font-bold">RATTATA!</strong> is een 10-koppige Doe Maar-tribute band uit de regio Brabant, opgericht in september 2025 door <strong class="text-neon-pink">Enzo Smit</strong>, die samen één missie delen: de energie, het gevoel en de unieke sound van Doe Maar opnieuw tot leven brengen — groter, voller en dynamischer dan ooit.
+                </p>
+                
+                <p>
+                    Met een repertoire aan hits brengt RATTATA! zowel de iconische klassiekers als de minder bekende parels. De band speelt single-versies, live-versies en zorgvuldig uitgewerkte arrangementen die het origineel respecteren maar live nóg beter werken.
+                </p>
+
+                <p>
+                    De <strong class="text-neon-green">twee blazers</strong> vormen het herkenbare hart van de Nederpop-sound, ondersteund door een uitgebreide ritmesectie, keys, gitaar, percussie en zang. Dankzij de 10-koppige bezetting klinkt RATTATA! rijk, energiek en authentiek — een live-ervaring die het publiek moeiteloos terugvoert naar de hoogtijdagen van Doe Maar.
+                </p>
+
+                <p class="text-white font-semibold italic text-lg pt-2 border-t border-zinc-800">
+                    "RATTATA! staat garant voor een avond vol nostalgie, dansbaarheid en pure liefde voor Nederpop. Even terug naar ‘83!"
+                </p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Live Agenda Section -->
+    <section id="agenda" class="py-16 md:py-24 bg-black relative border-t border-zinc-900">
+        <div class="container mx-auto px-4 max-w-4xl">
+            <div class="text-center mb-12">
+                <span class="text-neon-green text-xs font-bold uppercase tracking-widest bg-neon-green/10 border border-neon-green/30 px-3 py-1 rounded-full">
+                    Komen Kijken & Dansen
+                </span>
+                <h2 class="font-brand text-3xl md:text-5xl text-white mt-4">
+                    LIVE <span class="text-neon-pink">AGENDA</span>
+                </h2>
+                <p class="text-zinc-400 mt-2">Mis geen enkel optreden van RATTATA!</p>
+            </div>
+
+            <div class="space-y-6">
+                <!-- Show 1 -->
+                <div class="bg-card-bg rounded-3xl border border-zinc-800 p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 hover:border-neon-green/50 transition duration-300">
+                    <div class="flex items-center gap-6 w-full md:w-auto">
+                        <div class="bg-zinc-900 border-2 border-neon-green rounded-2xl px-5 py-3 text-center min-w-[110px] shrink-0">
+                            <span class="block text-neon-green text-xs font-black uppercase">2026</span>
+                            <span class="block text-white text-2xl font-black">27 SEP</span>
+                        </div>
+                        <div>
+                            <h3 class="text-white font-extrabold text-xl md:text-2xl">Sunday Live</h3>
+                            <p class="text-neon-pink font-bold flex items-center gap-1.5 mt-1">
+                                <i class="fa-solid fa-location-dot"></i> De Voorste Venne, Drunen
+                            </p>
+                        </div>
+                    </div>
+                    <a href="https://www.devoorstevenne.nl/wat-is-er-te-doen/sunday-live-89149" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="w-full md:w-auto px-6 py-3 bg-neon-green hover:bg-neon-green/90 text-black font-extrabold rounded-xl transition text-center flex items-center justify-center gap-2">
+                        <span>Meer info</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                    </a>
+                </div>
+
+                <!-- Show 2 -->
+                <div class="bg-card-bg rounded-3xl border border-zinc-800 p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 hover:border-neon-pink/50 transition duration-300">
+                    <div class="flex items-center gap-6 w-full md:w-auto">
+                        <div class="bg-zinc-900 border-2 border-neon-pink rounded-2xl px-5 py-3 text-center min-w-[110px] shrink-0">
+                            <span class="block text-neon-pink text-xs font-black uppercase">2026</span>
+                            <span class="block text-white text-2xl font-black">07 NOV</span>
+                        </div>
+                        <div>
+                            <h3 class="text-white font-extrabold text-xl md:text-2xl">Live @ Café Taverne</h3>
+                            <p class="text-neon-green font-bold flex items-center gap-1.5 mt-1">
+                                <i class="fa-solid fa-location-dot"></i> Café Taverne, Tilburg
+                            </p>
+                        </div>
+                    </div>
+                    <a href="https://www.cafetavernetilburg.nl/" 
+                       target="_blank" 
+                       rel="noopener noreferrer" 
+                       class="w-full md:w-auto px-6 py-3 bg-neon-pink hover:bg-neon-pink/90 text-white font-extrabold rounded-xl transition text-center flex items-center justify-center gap-2">
+                        <span>Meer info</span>
+                        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Muzikanten Section -->
+    <section id="band" class="py-16 md:py-24 bg-dark-bg relative border-t border-zinc-900">
+        <div class="container mx-auto px-4 max-w-3xl">
+            <div class="text-center mb-12">
+                <span class="text-neon-pink text-xs font-bold uppercase tracking-widest bg-neon-pink/10 border border-neon-pink/30 px-3 py-1 rounded-full">
+                    10-Koppige Bezetting
+                </span>
+                <h2 class="font-brand text-3xl md:text-5xl text-white mt-4">
+                    MUZIKANTEN
+                </h2>
+                <p class="text-zinc-400 mt-2">De muzikanten van RATTATA!</p>
+            </div>
+
+            <div class="bg-card-bg rounded-3xl border border-zinc-800 p-6 md:p-8 shadow-2xl">
+                <div class="divide-y divide-zinc-800/80">
+                    <div class="py-3.5 flex justify-between items-center px-4 hover:bg-zinc-900/60 rounded-xl transition">
+                        <span class="text-white font-bold text-base md:text-lg">Johar</span>
+                        <span class="text-neon-green font-semibold text-sm bg-neon-green/10 border border-neon-green/30 px-3 py-1 rounded-full">Zang</span>
+                    </div>
+                    <div class="py-3.5 flex justify-between items-center px-4 hover:bg-zinc-900/60 rounded-xl transition">
+                        <span class="text-white font-bold text-base md:text-lg">Sebas</span>
+                        <span class="text-neon-green font-semibold text-sm bg-neon-green/10 border border-neon-green/30 px-3 py-1 rounded-full">Zang</span>
+                    </div>
+                    <div class="py-3.5 flex justify-between items-center px-4 hover:bg-zinc-900/60 rounded-xl transition">
+                        <span class="text-white font-bold text-base md:text-lg">Hans</span>
+                        <span class="text-neon-green font-semibold text-sm bg-neon-green/10 border border-neon-green/30 px-3 py-1 rounded-full">Drums</span>
+                    </div>
+                    <div class="py-3.5 flex justify-between items-center px-4 hover:bg-zinc-900/60 rounded-xl transition">
+                        <span class="text-white font-bold text-base md:text-lg">Enzo</span>
+                        <span class="text-neon-green font-semibold text-sm bg-neon-green/10 border border-neon-green/30 px-3 py-1 rounded-full">Basgitaar</span>
+                    </div>
+                    <div class="py-3.5 flex justify-between items-center px-4 hover:bg-zinc-900/60 rounded-xl transition">
+                        <span class="text-white font-bold text-base md:text-lg">Michael</span>
+                        <span class="text-neon-green font-semibold text-sm bg-neon-green/10 border border-neon-green/30 px-3 py-1 rounded-full">Toetsen</span>
+                    </div>
+                    <div class="py-3.5 flex justify-between items-center px-4 hover:bg-zinc-900/60 rounded-xl transition">
+                        <span class="text-white font-bold text-base md:text-lg">Silvan</span>
+                        <span class="text-neon-green font-semibold text-sm bg-neon-green/10 border border-neon-green/30 px-3 py-1 rounded-full">Gitaar</span>
+                    </div>
+                    <div class="py-3.5 flex justify-between items-center px-4 hover:bg-zinc-900/60 rounded-xl transition">
+                        <span class="text-white font-bold text-base md:text-lg">Lieke</span>
+                        <span class="text-neon-green font-semibold text-sm bg-neon-green/10 border border-neon-green/30 px-3 py-1 rounded-full">Trompet (Blazer)</span>
+                    </div>
+                    <div class="py-3.5 flex justify-between items-center px-4 hover:bg-zinc-900/60 rounded-xl transition">
+                        <span class="text-white font-bold text-base md:text-lg">Ellemieke</span>
+                        <span class="text-neon-green font-semibold text-sm bg-neon-green/10 border border-neon-green/30 px-3 py-1 rounded-full">Trombone (Blazer)</span>
+                    </div>
+                    <div class="py-3.5 flex justify-between items-center px-4 hover:bg-zinc-900/60 rounded-xl transition">
+                        <span class="text-white font-bold text-base md:text-lg">Kiki</span>
+                        <span class="text-neon-green font-semibold text-sm bg-neon-green/10 border border-neon-green/30 px-3 py-1 rounded-full">Zang (Backing)</span>
+                    </div>
+                    <div class="py-3.5 flex justify-between items-center px-4 hover:bg-zinc-900/60 rounded-xl transition">
+                        <span class="text-white font-bold text-base md:text-lg">Lauraine</span>
+                        <span class="text-neon-green font-semibold text-sm bg-neon-green/10 border border-neon-green/30 px-3 py-1 rounded-full">Zang (Backing)</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Contact / Boekingen Section -->
+    <section id="contact" class="py-16 md:py-24 bg-dark-bg border-t border-zinc-900 relative">
+        <div class="container mx-auto px-4 max-w-4xl text-center">
+            <span class="text-neon-pink text-xs font-bold uppercase tracking-widest bg-neon-pink/10 border border-neon-pink/30 px-3 py-1 rounded-full">
+                Boekingen & Vragen
+            </span>
+            <h2 class="font-brand text-3xl md:text-5xl text-white mt-4 mb-4">
+                NEEM <span class="text-neon-green">CONTACT</span> OP
+            </h2>
+            <p class="text-zinc-300 max-w-xl mx-auto mb-8 text-base md:text-lg">
+                Boek RATTATA! voor je festival, evenement of feesttent. Klik op het envelopje om direct te mailen of volg onze socials!
+            </p>
+
+            <!-- Direct Contact Icons Bar -->
+            <div class="flex items-center justify-center gap-6 mb-12">
+                <!-- Direct Mail Icon Envelope -->
+                <a href="mailto:direct2stage@gmail.com" 
+                   title="Direct mailen" 
+                   class="w-16 h-16 rounded-2xl bg-zinc-900 border-2 border-neon-pink text-neon-pink hover:bg-neon-pink hover:text-white flex items-center justify-center text-3xl transition duration-300 transform hover:scale-110 shadow-lg shadow-neon-pink/20">
+                    <i class="fa-regular fa-envelope"></i>
+                </a>
+
+                <!-- Facebook Link -->
+                <a href="https://www.facebook.com/profile.php?id=61586258830806" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   title="Facebook Pagina" 
+                   class="w-16 h-16 rounded-2xl bg-zinc-900 border-2 border-zinc-800 text-zinc-300 hover:border-neon-green hover:text-neon-green flex items-center justify-center text-3xl transition duration-300 transform hover:scale-110">
+                    <i class="fa-brands fa-facebook-f"></i>
+                </a>
+
+                <!-- Instagram Link -->
+                <a href="https://www.instagram.com/toemaar_thetribute/" 
+                   target="_blank" 
+                   rel="noopener noreferrer" 
+                   title="Instagram Pagina" 
+                   class="w-16 h-16 rounded-2xl bg-zinc-900 border-2 border-zinc-800 text-zinc-300 hover:border-neon-pink hover:text-neon-pink flex items-center justify-center text-3xl transition duration-300 transform hover:scale-110">
+                    <i class="fa-brands fa-instagram"></i>
+                </a>
+            </div>
+
+            <!-- Booking Form -->
+            <div class="bg-card-bg p-8 md:p-10 rounded-3xl border border-zinc-800 text-left max-w-2xl mx-auto shadow-xl">
+                <h3 class="font-brand text-2xl text-white mb-6 text-center">Stuur Een Bericht</h3>
+                <form id="contact-form" onsubmit="submitForm(event)" class="space-y-4">
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-zinc-400 mb-1">Naam / Organisatie *</label>
+                        <input type="text" required class="w-full bg-black border border-zinc-800 focus:border-neon-pink rounded-xl px-4 py-3 text-white focus:outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-zinc-400 mb-1">E-mailadres *</label>
+                        <input type="email" required class="w-full bg-black border border-zinc-800 focus:border-neon-pink rounded-xl px-4 py-3 text-white focus:outline-none transition">
+                    </div>
+                    <div>
+                        <label class="block text-xs font-bold uppercase text-zinc-400 mb-1">Bericht *</label>
+                        <textarea rows="4" required class="w-full bg-black border border-zinc-800 focus:border-neon-green rounded-xl px-4 py-3 text-white focus:outline-none transition"></textarea>
+                    </div>
+                    <button type="submit" class="w-full bg-neon-pink hover:bg-neon-pink/90 text-white font-extrabold py-4 rounded-xl shadow-lg shadow-neon-pink/30 transition">
+                        VERSTUUR BERICHT
+                    </button>
+                </form>
+                <div id="form-success" class="hidden mt-4 p-4 bg-neon-green/20 border border-neon-green text-neon-green rounded-xl text-center text-sm font-bold">
+                    Bedankt voor je bericht! We nemen zo snel mogelijk contact op.
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-black border-t border-zinc-900 py-8 text-center text-zinc-500 text-xs">
+        <div class="container mx-auto px-4 space-y-3">
+            <p class="font-brand text-2xl text-neon-pink">RATTATA<span class="text-neon-green">!</span></p>
+            <p>Toe Maar Experience wordt RATTATA! • Doe Maar Tribute Band Brabant</p>
+            <p>&copy; <span id="year"></span> RATTATA! Alle rechten voorbehouden.</p>
+        </div>
+    </footer>
+
+    <script>
+        document.getElementById('year').textContent = new Date().getFullYear();
+
+        const toggleBtn = document.getElementById('menu-toggle');
+        const mobileMenu = document.getElementById('mobile-menu');
+
+        toggleBtn.addEventListener('click', () => {
+            mobileMenu.classList.toggle('hidden');
+        });
+
+        document.querySelectorAll('#mobile-menu a').forEach(link => {
+            link.addEventListener('click', () => {
+                mobileMenu.classList.add('hidden');
+            });
+        });
+
+        function submitForm(e) {
+            e.preventDefault();
+            document.getElementById('contact-form').reset();
+            const msg = document.getElementById('form-success');
+            msg.classList.remove('hidden');
+            setTimeout(() => {
+                msg.classList.add('hidden');
+            }, 4000);
+        }
+    </script>
+</body>
+</html>
