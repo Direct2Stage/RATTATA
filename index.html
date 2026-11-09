@@ -1,420 +1,677 @@
 <!DOCTYPE html>
-<html lang="nl" class="scroll-smooth">
+<html lang="nl">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>RATTATA! | De Ultieme Doe Maar Tribute Experience</title>
-    <!-- Tailwind CSS CDN -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- FontAwesome icons -->
+    <title>RATTATA! Doe Maar Experience</title>
+    <!-- Font Awesome voor Social Media Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
+    <!-- Google Fonts voor 80's Retro Nederpop Sfeer -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,300;0,400;0,600;0,800;0,900;1,400;1,700&family=Permanent+Marker&display=swap" rel="stylesheet">
-
-    <script>
-        tailwind.config = {
-            theme: {
-                extend: {
-                    colors: {
-                        'neon-pink': '#ff007f',
-                        'neon-green': '#00ff66',
-                        'dark-bg': '#050505',
-                        'card-bg': '#121212',
-                        'border-dark': '#222222'
-                    },
-                    fontFamily: {
-                        'brand': ['"Permanent Marker"', 'cursive'],
-                        'sans': ['Montserrat', 'sans-serif']
-                    }
-                }
-            }
-        }
-    </script>
-
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Rubik:wght@400;700;900&family=VT323&display=swap" rel="stylesheet">
+    
     <style>
+        :root {
+            --bg-black: #0d0d0d;
+            --bg-card: #181818;
+            --text-white: #ffffff;
+            --text-muted: #d0d0d0;
+            --accent-pink: #ff007f;
+            --accent-green: #76e200;
+            --border-color: #ff007f;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
         body {
-            background-color: #050505;
-            color: #ffffff;
-            font-family: 'Montserrat', sans-serif;
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            font-family: 'Rubik', sans-serif;
+            line-height: 1.6;
             overflow-x: hidden;
         }
 
-        /* Modern Neon Effects */
-        .neon-text-pink {
-            text-shadow: 0 0 10px rgba(255, 0, 127, 0.8), 0 0 25px rgba(255, 0, 127, 0.5);
-        }
-        .neon-text-green {
-            text-shadow: 0 0 10px rgba(0, 255, 102, 0.8), 0 0 25px rgba(0, 255, 102, 0.5);
-        }
-        .neon-border-pink {
-            box-shadow: 0 0 15px rgba(255, 0, 127, 0.5), inset 0 0 15px rgba(255, 0, 127, 0.2);
-        }
-        .neon-border-green {
-            box-shadow: 0 0 15px rgba(0, 255, 102, 0.5), inset 0 0 15px rgba(0, 255, 102, 0.2);
-        }
-        .neon-image-glow {
-            filter: drop-shadow(0 0 15px rgba(0, 255, 102, 0.3)) drop-shadow(0 0 25px rgba(255, 0, 127, 0.3));
+        /* 80's Retro Accent Balk */
+        .retro-bar {
+            height: 12px;
+            width: 100%;
+            background: linear-gradient(90deg, var(--accent-pink) 50%, var(--accent-green) 50%);
+            background-size: 30px 100%;
         }
 
-        /* Ska Checkerboard Accent Line */
-        .ska-checker {
-            background-image: linear-gradient(45deg, #111 25%, transparent 25%), 
-                              linear-gradient(-45deg, #111 25%, transparent 25%), 
-                              linear-gradient(45deg, transparent 75%, #111 75%), 
-                              linear-gradient(-45deg, transparent 75%, #111 75%);
-            background-size: 16px 16px;
-            background-position: 0 0, 0 8px, 8px -8px, -8px 0px;
+        /* Navigation Bar */
+        nav {
+            background-color: rgba(13, 13, 13, 0.95);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 3px solid var(--accent-pink);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 15px 20px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-email {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--text-white);
+            text-decoration: none;
+            font-weight: 700;
+            font-size: 1rem;
+            transition: color 0.2s;
+        }
+
+        .nav-email i {
+            font-size: 1.2rem;
+            color: var(--accent-green);
+        }
+
+        .nav-email:hover {
+            color: var(--accent-pink);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 25px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-white);
+            text-decoration: none;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            transition: color 0.2s;
+        }
+
+        .nav-links a:hover {
+            color: var(--accent-green);
+            text-shadow: 0 0 5px var(--accent-green);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            color: var(--text-white);
+            font-size: 1.8rem;
+            cursor: pointer;
+        }
+
+        /* Banner Header */
+        .banner-container {
+            width: 100%;
+            background-color: var(--accent-pink);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-bottom: 4px solid var(--accent-green);
+            padding: 20px 0;
+        }
+
+        .banner-img {
+            width: 100%;
+            max-width: 1000px;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* Main Container */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 40px 20px;
+        }
+
+        section {
+            margin-bottom: 60px;
+        }
+
+        .section-title {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.8rem;
+            color: var(--accent-green);
+            text-transform: uppercase;
+            margin-bottom: 25px;
+            text-shadow: 3px 3px 0px var(--accent-pink);
+            border-bottom: 3px solid var(--accent-pink);
+            padding-bottom: 10px;
+            display: inline-block;
+        }
+
+        /* Social Media Section */
+        .socials-section {
+            text-align: center;
+            background: var(--bg-card);
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid var(--accent-pink);
+            box-shadow: 5px 5px 0px var(--accent-green);
+        }
+
+        .socials-title {
+            font-family: 'Press Start 2P', cursive;
+            color: var(--accent-pink);
+            font-size: 1.2rem;
+            margin-bottom: 15px;
+        }
+
+        .socials-grid {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            margin-top: 15px;
+        }
+
+        .social-card {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 60px;
+            height: 60px;
+            background-color: #000;
+            color: var(--text-white);
+            text-decoration: none;
+            border-radius: 50%;
+            border: 2px solid var(--accent-green);
+            transition: all 0.3s ease;
+        }
+
+        .social-card:hover {
+            transform: scale(1.1) rotate(5deg);
+            background-color: var(--accent-pink);
+            color: #fff;
+            border-color: var(--accent-pink);
+            box-shadow: 0 0 15px var(--accent-pink);
+        }
+
+        .social-card i { font-size: 1.8rem; }
+        .social-card.facebook:hover i { color: #fff; }
+        .social-card.instagram:hover i { color: #fff; }
+
+        /* Media Section */
+        .single-photo-container {
+            width: 100%;
+            max-width: 900px;
+            margin: 0 auto;
+            border-radius: 12px;
+            border: 4px solid var(--accent-green);
+            box-shadow: 8px 8px 0px var(--accent-pink);
+            overflow: hidden;
+            background-color: #000;
+        }
+
+        .single-photo-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+        }
+
+        /* Swipable Nieuws Slider Styles */
+        .news-card {
+            background-color: var(--bg-card);
+            border: 2px solid var(--accent-green);
+            border-radius: 12px;
+            padding: 25px;
+            box-shadow: 5px 5px 0px var(--accent-pink);
+        }
+
+        .news-date {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.8rem;
+            color: var(--accent-pink);
+            margin-bottom: 12px;
+        }
+
+        .news-card h3 {
+            font-size: 1.5rem;
+            color: var(--accent-green);
+            margin-bottom: 12px;
+            font-weight: 900;
+        }
+
+        .news-card p {
+            color: var(--text-white);
+            font-size: 1.05rem;
+            line-height: 1.6;
+        }
+
+        /* Bio Layout */
+        .bio-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr;
+            gap: 30px;
+        }
+
+        .bio-text p {
+            margin-bottom: 18px;
+            font-size: 1.1rem;
+        }
+
+        .sidebar-card {
+            background-color: var(--bg-card);
+            padding: 25px;
+            border-radius: 12px;
+            border: 2px solid var(--accent-pink);
+            box-shadow: 5px 5px 0px var(--accent-green);
+        }
+
+        .sidebar-card h3 {
+            color: var(--accent-green);
+            font-family: 'Press Start 2P', cursive;
+            margin-bottom: 15px;
+            font-size: 1.1rem;
+        }
+
+        .band-list {
+            list-style: none;
+        }
+
+        .band-list li {
+            padding: 8px 0;
+            border-bottom: 1px dashed #333;
+            display: flex;
+            justify-content: space-between;
+            font-size: 1rem;
+        }
+
+        .band-list .role {
+            color: var(--accent-pink);
+            font-weight: bold;
+        }
+
+        /* Agenda Section */
+        .agenda-list {
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .agenda-item {
+            display: flex;
+            align-items: center;
+            background-color: var(--bg-card);
+            border: 2px solid var(--accent-green);
+            border-radius: 12px;
+            padding: 20px 25px;
+            box-shadow: 5px 5px 0px var(--accent-pink);
+            transition: transform 0.2s ease;
+        }
+
+        .agenda-item:hover {
+            transform: translateY(-3px);
+        }
+
+        .agenda-date {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: #000;
+            border: 2px solid var(--accent-pink);
+            border-radius: 8px;
+            padding: 10px 15px;
+            min-width: 90px;
+            text-align: center;
+        }
+
+        .agenda-date .day {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.4rem;
+            color: var(--accent-green);
+            line-height: 1.2;
+        }
+
+        .agenda-date .month {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            color: var(--text-white);
+            font-weight: bold;
+            margin-top: 4px;
+        }
+
+        .agenda-details {
+            flex-grow: 1;
+            padding-left: 25px;
+        }
+
+        .agenda-details h3 {
+            font-size: 1.4rem;
+            color: var(--text-white);
+            margin-bottom: 6px;
+        }
+
+        .agenda-details p {
+            font-size: 1rem;
+            color: var(--text-muted);
+        }
+
+        .agenda-action {
+            margin-left: 20px;
+        }
+
+        .btn-ticket {
+            display: inline-block;
+            background-color: var(--accent-pink);
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            border-radius: 6px;
+            text-decoration: none;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.7rem;
+            text-transform: uppercase;
+            transition: all 0.2s ease;
+            box-shadow: 3px 3px 0px var(--accent-green);
+        }
+
+        .btn-ticket:hover {
+            background-color: var(--accent-green);
+            color: #000;
+            box-shadow: 3px 3px 0px var(--accent-pink);
+        }
+
+        /* Contact Section */
+        .contact-box {
+            background-color: var(--accent-pink);
+            color: #fff;
+            padding: 40px 25px;
+            border-radius: 12px;
+            text-align: center;
+            border: 3px solid var(--accent-green);
+            box-shadow: 6px 6px 0px #000;
+        }
+
+        .contact-box h2 {
+            font-family: 'Press Start 2P', cursive;
+            font-size: 1.6rem;
+            margin-bottom: 15px;
+            text-shadow: 2px 2px 0px #000;
+        }
+
+        .contact-box p {
+            font-size: 1.2rem;
+            font-weight: bold;
+            margin-bottom: 25px;
+        }
+
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-email {
+            display: inline-block;
+            background-color: #000;
+            color: var(--accent-green);
+            padding: 15px 30px;
+            text-decoration: none;
+            border-radius: 8px;
+            font-family: 'Press Start 2P', cursive;
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            border: 2px solid var(--accent-green);
+            transition: all 0.2s;
+        }
+
+        .btn-email:hover {
+            background-color: var(--accent-green);
+            color: #000;
+        }
+
+        footer {
+            background-color: #050505;
+            padding: 30px 20px;
+            text-align: center;
+            color: var(--text-muted);
+            border-top: 2px solid var(--accent-pink);
+            margin-top: 40px;
+        }
+
+        /* Responsive Mobile Styles */
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 12px 15px;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--bg-black);
+                padding: 20px;
+                border-bottom: 3px solid var(--accent-pink);
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .bio-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .agenda-item {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 15px;
+            }
+
+            .agenda-details {
+                padding-left: 0;
+            }
+
+            .agenda-action {
+                margin-left: 0;
+                width: 100%;
+            }
+
+            .btn-ticket {
+                display: block;
+                text-align: center;
+            }
+
+            .section-title {
+                font-size: 1.3rem;
+            }
+
+            .contact-box h2 {
+                font-size: 1.2rem;
+            }
         }
     </style>
 </head>
-<body class="min-h-screen flex flex-col justify-between antialiased selection:bg-neon-pink selection:text-black">
+<body>
 
-    <!-- Announcement Banner -->
-    <div class="bg-gradient-to-r from-neon-pink via-purple-900 to-neon-green text-black font-extrabold py-2.5 px-4 text-center text-sm md:text-base sticky top-0 z-50 shadow-md border-b border-white/20">
-        <div class="container mx-auto flex items-center justify-center space-x-2">
-            <span class="bg-black text-neon-green px-2 py-0.5 rounded text-xs uppercase tracking-widest font-black border border-neon-green">UPDATE</span>
-            <span class="text-white font-extrabold uppercase tracking-wide">Toe Maar Experience wordt <span class="text-neon-green font-brand text-xl underline decoration-neon-pink underline-offset-4">RATTATA!</span></span>
-            <i class="fa-solid fa-bolt text-yellow-300 animate-pulse"></i>
-        </div>
-    </div>
+    <!-- 80's Retro Accent Header -->
+    <div class="retro-bar"></div>
 
     <!-- Navigation -->
-    <nav class="bg-black/90 backdrop-blur-md border-b border-zinc-800 sticky top-[41px] z-40">
-        <div class="container mx-auto px-4 py-4 flex justify-between items-center">
-            <a href="#" class="font-brand text-3xl md:text-4xl text-neon-pink hover:text-neon-pink/90 transition tracking-wider">
-                RATTATA<span class="text-neon-green">!</span>
-            </a>
-
-            <!-- Desktop Links -->
-            <div class="hidden md:flex items-center space-x-8 text-sm font-bold uppercase tracking-wider">
-                <a href="#about" class="text-gray-300 hover:text-neon-green transition">Over De Band</a>
-                <a href="#agenda" class="text-neon-green hover:text-neon-pink transition flex items-center gap-1.5"><i class="fa-regular fa-calendar-alt"></i> Live Agenda</a>
-                <a href="#band" class="text-gray-300 hover:text-neon-pink transition">Muzikanten</a>
-                <a href="#contact" class="px-4 py-2 bg-neon-pink hover:bg-neon-pink/80 text-white rounded-xl transition shadow-lg shadow-neon-pink/30 flex items-center gap-2">
-                    <i class="fa-regular fa-envelope"></i> Boeken
+    <nav>
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="mailto:rattata.tribute@gmail.com" class="nav-email" title="rattata.tribute@gmail.com">
+                    <i class="fas fa-envelope"></i>
+                    <span>rattata.tribute@gmail.com</span>
                 </a>
             </div>
 
-            <!-- Mobile Menu Button -->
-            <button id="menu-toggle" class="md:hidden text-2xl text-neon-green focus:outline-none" aria-label="Menu">
-                <i class="fa-solid fa-bars"></i>
+            <button class="mobile-menu-btn" id="menuToggle" aria-label="Menu">
+                <i class="fas fa-bars"></i>
             </button>
-        </div>
-
-        <!-- Mobile Menu Dropdown -->
-        <div id="mobile-menu" class="hidden md:hidden bg-zinc-950 border-b border-zinc-800 px-6 py-4 space-y-4 text-center font-bold uppercase tracking-wider text-sm">
-            <a href="#about" class="block text-gray-300 hover:text-neon-green py-2">Over De Band</a>
-            <a href="#agenda" class="block text-neon-green hover:text-neon-pink py-2">Live Agenda</a>
-            <a href="#band" class="block text-gray-300 hover:text-neon-pink py-2">Muzikanten</a>
-            <a href="#contact" class="block py-2 text-neon-pink"><i class="fa-regular fa-envelope mr-1"></i> Contact & Boekingen</a>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#media">Media</a></li>
+                <li><a href="#agenda">Agenda</a></li>
+                <li><a href="#news">Nieuws</a></li>
+                <li><a href="#about">Over de Band</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
         </div>
     </nav>
 
-    <!-- Hero Section -->
-    <header class="relative pt-10 pb-16 md:pt-16 md:pb-20 overflow-hidden border-b border-zinc-900">
-        <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-96 h-96 bg-neon-pink/15 rounded-full blur-3xl pointer-events-none"></div>
-        <div class="absolute bottom-10 right-10 w-80 h-80 bg-neon-green/10 rounded-full blur-3xl pointer-events-none"></div>
+    <!-- Top Banner Image -->
+    <div class="banner-container" id="home">
+        <img src="RATTATALOGO.jpg" alt="RATTATA! Doe Maar Experience Banner Logo" class="banner-img" onerror="this.onerror=null; this.src='https://via.placeholder.com/1000x350/ff007f/76e200?text=RATTATA!+Doe+Maar+Experience';">
+    </div>
 
-        <div class="container mx-auto px-4 text-center relative z-10">
-            <div class="mb-6">
-                <span class="inline-block bg-zinc-900 text-neon-green border border-neon-green/40 px-4 py-1.5 rounded-full text-xs md:text-sm font-bold uppercase tracking-widest mb-4">
-                    De Ultieme Doe Maar Tribute Experience
-                </span>
-                <h1 class="font-brand text-5xl md:text-7xl lg:text-8xl text-white tracking-wide">
-                    RATTATA<span class="text-neon-pink">!</span>
-                </h1>
-                <p class="text-zinc-400 mt-2 text-lg md:text-xl font-medium max-w-2xl mx-auto">
-                    Even terug naar <span class="text-neon-green font-bold">'83</span>!
-                </p>
-            </div>
+    <!-- 80's Retro Accent Divider -->
+    <div class="retro-bar"></div>
 
-            <!-- Band Photo (1025x579) -->
-            <div class="max-w-4xl mx-auto my-8 relative group">
-                <div class="absolute -inset-1 bg-gradient-to-r from-neon-pink via-purple-600 to-neon-green rounded-3xl blur opacity-70 group-hover:opacity-100 transition duration-500"></div>
-                <div class="relative bg-black rounded-3xl overflow-hidden border-2 border-zinc-800">
-                    <img 
-                        src="RATTATA.jpg" 
-                        alt="RATTATA! Doe Maar Tribute Band" 
-                        class="w-full h-auto object-cover aspect-[1025/579] neon-image-glow transform hover:scale-[1.01] transition duration-500"
-                        onerror="this.onerror=null; this.src='https://placehold.co/1025x579/111111/ff007f?text=RATTATA!+Doe+Maar+Tribute+Band';"
-                    />
-                </div>
-            </div>
-
-            <div class="flex flex-wrap items-center justify-center gap-4 mt-8">
-                <a href="#agenda" class="px-8 py-4 bg-neon-green hover:bg-neon-green/90 text-black font-extrabold rounded-2xl transition duration-300 shadow-lg shadow-neon-green/20 flex items-center gap-3">
-                    <i class="fa-solid fa-ticket text-lg"></i>
-                    <span>LIVE AGENDA</span>
+    <div class="container">
+        
+        <!-- Socials Section -->
+        <section class="socials-section">
+            <h2 class="socials-title">Volg RATTATA!</h2>
+            <div class="socials-grid">
+                <a href="https://www.facebook.com/profile.php?id=61586258830806&locale=nl_NL" target="_blank" class="social-card facebook" title="Facebook" aria-label="Facebook">
+                    <i class="fab fa-facebook-f"></i>
                 </a>
-                <a href="#contact" class="px-8 py-4 bg-neon-pink hover:bg-neon-pink/90 text-white font-extrabold rounded-2xl transition duration-300 shadow-lg shadow-neon-pink/30 flex items-center gap-3">
-                    <i class="fa-regular fa-envelope text-lg"></i>
-                    <span>BOEK RATTATA!</span>
+                <a href="https://www.instagram.com/rattata_doemaarexperience/" target="_blank" class="social-card instagram" title="Instagram" aria-label="Instagram">
+                    <i class="fab fa-instagram"></i>
                 </a>
             </div>
-        </div>
-    </header>
+        </section>
 
-    <div class="h-4 ska-checker border-y border-zinc-800"></div>
-
-    <!-- Bio Section -->
-    <section id="about" class="py-16 md:py-24 bg-dark-bg relative">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <div class="text-center mb-10">
-                <span class="text-neon-pink text-xs font-bold uppercase tracking-widest bg-neon-pink/10 border border-neon-pink/30 px-3 py-1 rounded-full">
-                    Brabants Nederpop Geweld
-                </span>
-                <h2 class="font-brand text-3xl md:text-5xl text-white mt-4">
-                    OVER <span class="text-neon-green">RATTATA!</span>
-                </h2>
+        <!-- Media Section: Bandfoto -->
+        <section id="media">
+            <h2 class="section-title">Foto</h2>
+            <div class="single-photo-container">
+                <img src="RATTATA.jpg" alt="RATTATA! Bandfoto" onerror="this.onerror=null; this.src='https://via.placeholder.com/900x500/181818/76e200?text=RATTATA!+Bandfoto';">
             </div>
+        </section>
 
-            <div class="bg-card-bg p-8 md:p-12 rounded-3xl border border-zinc-800 space-y-6 text-zinc-300 text-base md:text-lg leading-relaxed shadow-xl">
-                <p>
-                    <strong class="text-white font-bold">RATTATA!</strong> is een 10-koppige Doe Maar-tribute band uit de regio Brabant, opgericht in september 2025 door <strong class="text-neon-pink">Enzo Smit</strong>, die samen één missie delen: de energie, het gevoel en de unieke sound van Doe Maar opnieuw tot leven brengen — groter, voller en dynamischer dan ooit.
-                </p>
-                
-                <p>
-                    Met een repertoire aan hits brengt RATTATA! zowel de iconische klassiekers als de minder bekende parels. De band speelt single-versies, live-versies en zorgvuldig uitgewerkte arrangementen die het origineel respecteren maar live nóg beter werken.
-                </p>
-
-                <p>
-                    De <strong class="text-neon-green">twee blazers</strong> vormen het herkenbare hart van de Nederpop-sound, ondersteund door een uitgebreide ritmesectie, keys, gitaar, percussie en zang. Dankzij de 10-koppige bezetting klinkt RATTATA! rijk, energiek en authentiek — een live-ervaring die het publiek moeiteloos terugvoert naar de hoogtijdagen van Doe Maar.
-                </p>
-
-                <p class="text-white font-semibold italic text-lg pt-2 border-t border-zinc-800">
-                    "RATTATA! staat garant voor een avond vol nostalgie, dansbaarheid en pure liefde voor Nederpop. Even terug naar ‘83!"
-                </p>
-            </div>
-        </div>
-    </section>
-
-    <!-- Live Agenda Section -->
-    <section id="agenda" class="py-16 md:py-24 bg-black relative border-t border-zinc-900">
-        <div class="container mx-auto px-4 max-w-4xl">
-            <div class="text-center mb-12">
-                <span class="text-neon-green text-xs font-bold uppercase tracking-widest bg-neon-green/10 border border-neon-green/30 px-3 py-1 rounded-full">
-                    Komen Kijken & Dansen
-                </span>
-                <h2 class="font-brand text-3xl md:text-5xl text-white mt-4">
-                    LIVE <span class="text-neon-pink">AGENDA</span>
-                </h2>
-                <p class="text-zinc-400 mt-2">Mis geen enkel optreden van RATTATA!</p>
-            </div>
-
-            <div class="space-y-6">
-                <!-- Show 1 -->
-                <div class="bg-card-bg rounded-3xl border border-zinc-800 p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 hover:border-neon-green/50 transition duration-300">
-                    <div class="flex items-center gap-6 w-full md:w-auto">
-                        <div class="bg-zinc-900 border-2 border-neon-green rounded-2xl px-5 py-3 text-center min-w-[110px] shrink-0">
-                            <span class="block text-neon-green text-xs font-black uppercase">2026</span>
-                            <span class="block text-white text-2xl font-black">27 SEP</span>
-                        </div>
-                        <div>
-                            <h3 class="text-white font-extrabold text-xl md:text-2xl">Sunday Live</h3>
-                            <p class="text-neon-pink font-bold flex items-center gap-1.5 mt-1">
-                                <i class="fa-solid fa-location-dot"></i> De Voorste Venne, Drunen
-                            </p>
-                        </div>
+        <!-- Live Agenda Section -->
+        <section id="agenda">
+            <h2 class="section-title">Live Agenda</h2>
+            <div class="agenda-list" id="agendaList">
+                <div class="agenda-item">
+                    <div class="agenda-date">
+                        <span class="day">19</span>
+                        <span class="month">FEB 2027</span>
                     </div>
-                    <a href="https://www.devoorstevenne.nl/wat-is-er-te-doen/sunday-live-89149" 
-                       target="_blank" 
-                       rel="noopener noreferrer" 
-                       class="w-full md:w-auto px-6 py-3 bg-neon-green hover:bg-neon-green/90 text-black font-extrabold rounded-xl transition text-center flex items-center justify-center gap-2">
-                        <span>Meer info</span>
-                        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
-                    </a>
+                    <div class="agenda-details">
+                        <h3>Kim's Kroeg</h3>
+                        <p><i class="fas fa-clock" style="color: var(--accent-pink);"></i> Aanvang 21:00</p>
+                    </div>
+                    <div class="agenda-action">
+                        <a href="https://kimskroeg.nl/" target="_blank" rel="noopener noreferrer" class="btn-ticket">Info & Location</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nieuws & Updates Sectie -->
+        <section id="news">
+            <h2 class="section-title">Nieuws & Updates</h2>
+            <div class="news-card">
+                <div class="news-date">November 2025</div>
+                <h3>Naamsverandering naar RATTATA!</h3>
+                <p>Met trots maken we bekend dat de bandnaam is veranderd van Toe Maar Experience naar <strong>RATTATA!</strong>. Dit werd feestelijk onthuld op 7 november tijdens onze show in Café Taverne in Tilburg.</p>
+            </div>
+        </section>
+
+        <!-- Band Bio & Line-up -->
+        <section id="about">
+            <h2 class="section-title">Over de Band</h2>
+            <div class="bio-grid">
+                <div class="bio-text">
+                    <p><strong>RATTATA!</strong> is een tienkoppige Doe Maar-tribute band uit de regio Brabant, opgericht in september 2025 door Enzo Smit, die samen één missie delen: de energie, het gevoel en de unieke sound van Doe Maar opnieuw tot leven brengen — groter, voller en dynamischer dan ooit.</p>
+                    
+                    <p>Met een repertoire aan hits brengt Toe Maar Experience zowel de iconische klassiekers als de minder bekende parels. De band speelt single-versies, live-versies en zorgvuldig uitgewerkte arrangementen die het origineel respecteren maar live nóg beter werken.</p>
+
+                    <p>De drie blazers vormen het herkenbare hart van de Nederpop-sound, ondersteund door een uitgebreide ritmesectie, keys, gitaar. RATTATA! rijk, energiek en authentiek — een live-ervaring die het publiek moeiteloos terugvoert naar de hoogtijdagen van RATTATA! staat garant voor een avond vol nostalgie, dansbaarheid en pure liefde voor Nederpop. Even terug naar ‘83!</p>
                 </div>
 
-                <!-- Show 2 -->
-                <div class="bg-card-bg rounded-3xl border border-zinc-800 p-6 md:p-8 flex flex-col md:flex-row items-center justify-between gap-6 hover:border-neon-pink/50 transition duration-300">
-                    <div class="flex items-center gap-6 w-full md:w-auto">
-                        <div class="bg-zinc-900 border-2 border-neon-pink rounded-2xl px-5 py-3 text-center min-w-[110px] shrink-0">
-                            <span class="block text-neon-pink text-xs font-black uppercase">2026</span>
-                            <span class="block text-white text-2xl font-black">07 NOV</span>
-                        </div>
-                        <div>
-                            <h3 class="text-white font-extrabold text-xl md:text-2xl">Live @ Café Taverne</h3>
-                            <p class="text-neon-green font-bold flex items-center gap-1.5 mt-1">
-                                <i class="fa-solid fa-location-dot"></i> Café Taverne, Tilburg
-                            </p>
-                        </div>
+                <div class="bio-sidebar">
+                    <div class="sidebar-card">
+                        <h3>Bandbezetting</h3>
+                        <ul class="band-list">
+                            <li><span>Johar</span> <span class="role">Leadzang</span></li>
+                            <li><span>Sebas</span> <span class="role">Leadzang</span></li>
+                            <li><span>Silvan</span> <span class="role">Gitaar</span></li>
+                            <li><span>Enzo</span> <span class="role">Basgitaar</span></li>
+                            <li><span>Michael</span> <span class="role">Keys</span></li>
+                            <li><span>Hans</span> <span class="role">Drums</span></li>
+                            <li><span>Kiki</span> <span class="role">Backing vocals</span></li>
+                            <li><span>Lauraine</span> <span class="role">Backing vocals</span></li>
+                            <li><span>Ellemieke</span> <span class="role">Trombone</span></li>
+                            <li><span>Lieke</span> <span class="role">Trompet</span></li>
+                        </ul>
                     </div>
-                    <a href="https://www.cafetavernetilburg.nl/" 
-                       target="_blank" 
-                       rel="noopener noreferrer" 
-                       class="w-full md:w-auto px-6 py-3 bg-neon-pink hover:bg-neon-pink/90 text-white font-extrabold rounded-xl transition text-center flex items-center justify-center gap-2">
-                        <span>Meer info</span>
-                        <i class="fa-solid fa-arrow-up-right-from-square text-xs"></i>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact">
+            <div class="contact-box">
+                <h2>Boekingen & Contact</h2>
+                <p>Wil je RATTATA! Doe Maar Experience op jouw podium, festival of feest?</p>
+                <div class="contact-buttons">
+                    <a href="mailto:rattata.tribute@gmail.com" class="btn-email">
+                        <i class="fas fa-envelope"></i> Mail rattata.tribute@gmail.com
                     </a>
                 </div>
             </div>
-        </div>
-    </section>
+        </section>
 
-    <!-- Muzikanten Section -->
-    <section id="band" class="py-16 md:py-24 bg-dark-bg relative border-t border-zinc-900">
-        <div class="container mx-auto px-4 max-w-3xl">
-            <div class="text-center mb-12">
-                <span class="text-neon-pink text-xs font-bold uppercase tracking-widest bg-neon-pink/10 border border-neon-pink/30 px-3 py-1 rounded-full">
-                    10-Koppige Bezetting
-                </span>
-                <h2 class="font-brand text-3xl md:text-5xl text-white mt-4">
-                    MUZIKANTEN
-                </h2>
-                <p class="text-zinc-400 mt-2">De muzikanten van RATTATA!</p>
-            </div>
+    </div>
 
-            <div class="bg-card-bg rounded-3xl border border-zinc-800 p-6 md:p-8 shadow-2xl">
-                <div class="divide-y divide-zinc-800/80">
-                    <div class="py-3.5 flex justify-between items-center px-4 hover:bg-zinc-900/60 rounded-xl transition">
-                        <span class="text-white font-bold text-base md:text-lg">Johar</span>
-                        <span class="text-neon-green font-semibold text-sm bg-neon-green/10 border border-neon-green/30 px-3 py-1 rounded-full">Zang</span>
-                    </div>
-                    <div class="py-3.5 flex justify-between items-center px-4 hover:bg-zinc-900/60 rounded-xl transition">
-                        <span class="text-white font-bold text-base md:text-lg">Sebas</span>
-                        <span class="text-neon-green font-semibold text-sm bg-neon-green/10 border border-neon-green/30 px-3 py-1 rounded-full">Zang</span>
-                    </div>
-                    <div class="py-3.5 flex justify-between items-center px-4 hover:bg-zinc-900/60 rounded-xl transition">
-                        <span class="text-white font-bold text-base md:text-lg">Hans</span>
-                        <span class="text-neon-green font-semibold text-sm bg-neon-green/10 border border-neon-green/30 px-3 py-1 rounded-full">Drums</span>
-                    </div>
-                    <div class="py-3.5 flex justify-between items-center px-4 hover:bg-zinc-900/60 rounded-xl transition">
-                        <span class="text-white font-bold text-base md:text-lg">Enzo</span>
-                        <span class="text-neon-green font-semibold text-sm bg-neon-green/10 border border-neon-green/30 px-3 py-1 rounded-full">Basgitaar</span>
-                    </div>
-                    <div class="py-3.5 flex justify-between items-center px-4 hover:bg-zinc-900/60 rounded-xl transition">
-                        <span class="text-white font-bold text-base md:text-lg">Michael</span>
-                        <span class="text-neon-green font-semibold text-sm bg-neon-green/10 border border-neon-green/30 px-3 py-1 rounded-full">Toetsen</span>
-                    </div>
-                    <div class="py-3.5 flex justify-between items-center px-4 hover:bg-zinc-900/60 rounded-xl transition">
-                        <span class="text-white font-bold text-base md:text-lg">Silvan</span>
-                        <span class="text-neon-green font-semibold text-sm bg-neon-green/10 border border-neon-green/30 px-3 py-1 rounded-full">Gitaar</span>
-                    </div>
-                    <div class="py-3.5 flex justify-between items-center px-4 hover:bg-zinc-900/60 rounded-xl transition">
-                        <span class="text-white font-bold text-base md:text-lg">Lieke</span>
-                        <span class="text-neon-green font-semibold text-sm bg-neon-green/10 border border-neon-green/30 px-3 py-1 rounded-full">Trompet (Blazer)</span>
-                    </div>
-                    <div class="py-3.5 flex justify-between items-center px-4 hover:bg-zinc-900/60 rounded-xl transition">
-                        <span class="text-white font-bold text-base md:text-lg">Ellemieke</span>
-                        <span class="text-neon-green font-semibold text-sm bg-neon-green/10 border border-neon-green/30 px-3 py-1 rounded-full">Trombone (Blazer)</span>
-                    </div>
-                    <div class="py-3.5 flex justify-between items-center px-4 hover:bg-zinc-900/60 rounded-xl transition">
-                        <span class="text-white font-bold text-base md:text-lg">Kiki</span>
-                        <span class="text-neon-green font-semibold text-sm bg-neon-green/10 border border-neon-green/30 px-3 py-1 rounded-full">Zang (Backing)</span>
-                    </div>
-                    <div class="py-3.5 flex justify-between items-center px-4 hover:bg-zinc-900/60 rounded-xl transition">
-                        <span class="text-white font-bold text-base md:text-lg">Lauraine</span>
-                        <span class="text-neon-green font-semibold text-sm bg-neon-green/10 border border-neon-green/30 px-3 py-1 rounded-full">Zang (Backing)</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Contact / Boekingen Section -->
-    <section id="contact" class="py-16 md:py-24 bg-dark-bg border-t border-zinc-900 relative">
-        <div class="container mx-auto px-4 max-w-4xl text-center">
-            <span class="text-neon-pink text-xs font-bold uppercase tracking-widest bg-neon-pink/10 border border-neon-pink/30 px-3 py-1 rounded-full">
-                Boekingen & Vragen
-            </span>
-            <h2 class="font-brand text-3xl md:text-5xl text-white mt-4 mb-4">
-                NEEM <span class="text-neon-green">CONTACT</span> OP
-            </h2>
-            <p class="text-zinc-300 max-w-xl mx-auto mb-8 text-base md:text-lg">
-                Boek RATTATA! voor je festival, evenement of feesttent. Klik op het envelopje om direct te mailen of volg onze socials!
-            </p>
-
-            <!-- Direct Contact Icons Bar -->
-            <div class="flex items-center justify-center gap-6 mb-12">
-                <!-- Direct Mail Icon Envelope -->
-                <a href="mailto:direct2stage@gmail.com" 
-                   title="Direct mailen" 
-                   class="w-16 h-16 rounded-2xl bg-zinc-900 border-2 border-neon-pink text-neon-pink hover:bg-neon-pink hover:text-white flex items-center justify-center text-3xl transition duration-300 transform hover:scale-110 shadow-lg shadow-neon-pink/20">
-                    <i class="fa-regular fa-envelope"></i>
-                </a>
-
-                <!-- Facebook Link -->
-                <a href="https://www.facebook.com/profile.php?id=61586258830806" 
-                   target="_blank" 
-                   rel="noopener noreferrer" 
-                   title="Facebook Pagina" 
-                   class="w-16 h-16 rounded-2xl bg-zinc-900 border-2 border-zinc-800 text-zinc-300 hover:border-neon-green hover:text-neon-green flex items-center justify-center text-3xl transition duration-300 transform hover:scale-110">
-                    <i class="fa-brands fa-facebook-f"></i>
-                </a>
-
-                <!-- Instagram Link -->
-                <a href="https://www.instagram.com/toemaar_thetribute/" 
-                   target="_blank" 
-                   rel="noopener noreferrer" 
-                   title="Instagram Pagina" 
-                   class="w-16 h-16 rounded-2xl bg-zinc-900 border-2 border-zinc-800 text-zinc-300 hover:border-neon-pink hover:text-neon-pink flex items-center justify-center text-3xl transition duration-300 transform hover:scale-110">
-                    <i class="fa-brands fa-instagram"></i>
-                </a>
-            </div>
-
-            <!-- Booking Form -->
-            <div class="bg-card-bg p-8 md:p-10 rounded-3xl border border-zinc-800 text-left max-w-2xl mx-auto shadow-xl">
-                <h3 class="font-brand text-2xl text-white mb-6 text-center">Stuur Een Bericht</h3>
-                <form id="contact-form" onsubmit="submitForm(event)" class="space-y-4">
-                    <div>
-                        <label class="block text-xs font-bold uppercase text-zinc-400 mb-1">Naam / Organisatie *</label>
-                        <input type="text" required class="w-full bg-black border border-zinc-800 focus:border-neon-pink rounded-xl px-4 py-3 text-white focus:outline-none transition">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold uppercase text-zinc-400 mb-1">E-mailadres *</label>
-                        <input type="email" required class="w-full bg-black border border-zinc-800 focus:border-neon-pink rounded-xl px-4 py-3 text-white focus:outline-none transition">
-                    </div>
-                    <div>
-                        <label class="block text-xs font-bold uppercase text-zinc-400 mb-1">Bericht *</label>
-                        <textarea rows="4" required class="w-full bg-black border border-zinc-800 focus:border-neon-green rounded-xl px-4 py-3 text-white focus:outline-none transition"></textarea>
-                    </div>
-                    <button type="submit" class="w-full bg-neon-pink hover:bg-neon-pink/90 text-white font-extrabold py-4 rounded-xl shadow-lg shadow-neon-pink/30 transition">
-                        VERSTUUR BERICHT
-                    </button>
-                </form>
-                <div id="form-success" class="hidden mt-4 p-4 bg-neon-green/20 border border-neon-green text-neon-green rounded-xl text-center text-sm font-bold">
-                    Bedankt voor je bericht! We nemen zo snel mogelijk contact op.
-                </div>
-            </div>
-        </div>
-    </section>
+    <!-- 80's Retro Accent Divider -->
+    <div class="retro-bar"></div>
 
     <!-- Footer -->
-    <footer class="bg-black border-t border-zinc-900 py-8 text-center text-zinc-500 text-xs">
-        <div class="container mx-auto px-4 space-y-3">
-            <p class="font-brand text-2xl text-neon-pink">RATTATA<span class="text-neon-green">!</span></p>
-            <p>Toe Maar Experience wordt RATTATA! • Doe Maar Tribute Band Brabant</p>
-            <p>&copy; <span id="year"></span> RATTATA! Alle rechten voorbehouden.</p>
-        </div>
+    <footer>
+        <p>&copy; 2026 RATTATA! Doe Maar Experience. Alle rechten voorbehouden.</p>
     </footer>
 
+    <!-- Scripts -->
     <script>
-        document.getElementById('year').textContent = new Date().getFullYear();
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
 
-        const toggleBtn = document.getElementById('menu-toggle');
-        const mobileMenu = document.getElementById('mobile-menu');
-
-        toggleBtn.addEventListener('click', () => {
-            mobileMenu.classList.toggle('hidden');
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
         });
 
-        document.querySelectorAll('#mobile-menu a').forEach(link => {
+        document.querySelectorAll('.nav-links a').forEach(link => {
             link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
+                navLinks.classList.remove('active');
             });
         });
-
-        function submitForm(e) {
-            e.preventDefault();
-            document.getElementById('contact-form').reset();
-            const msg = document.getElementById('form-success');
-            msg.classList.remove('hidden');
-            setTimeout(() => {
-                msg.classList.add('hidden');
-            }, 4000);
-        }
     </script>
 </body>
 </html>
