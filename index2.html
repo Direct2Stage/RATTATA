@@ -1,0 +1,1382 @@
+<!DOCTYPE html>
+<html lang="nl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>RATTATA! Doe Maar Experience — Terug naar '83!</title>
+    <!-- Font Awesome voor Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts: Authentieke 80's Retro Display, Arcade Pixel & Cassette Typografie -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=Righteous&family=Rubik:wght@400;600;700;900&family=Space+Mono:ital,wght@0,400;0,700;1,700&display=swap" rel="stylesheet">
+    
+    <style>
+        /* =========================================================
+           1. KLEURENPALET (STRIKT BEHOUDEN) & 80'S DESIGN TOKENS
+           ========================================================= */
+        :root {
+            --bg-black: #0d0d0d;
+            --bg-card: #181818;
+            --text-white: #ffffff;
+            --text-muted: #d0d0d0;
+            --accent-pink: #ff007f;
+            --accent-green: #76e200;
+            --accent-yellow: #ffff00;
+
+            --font-display: 'Righteous', cursive, sans-serif;
+            --font-pixel: 'Press Start 2P', monospace;
+            --font-mono: 'Space Mono', monospace;
+            --font-body: 'Rubik', Arial, sans-serif;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            /* Scherpe, hoekige jaren '80 esthetiek */
+            border-radius: 0 !important;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            font-family: var(--font-body);
+            line-height: 1.65;
+            overflow-x: hidden;
+            position: relative;
+            /* Subtiel 80's Synthwave / Memphis Neon Grid op de achtergrond */
+            background-image: 
+                linear-gradient(to right, rgba(255, 0, 127, 0.08) 1px, transparent 1px),
+                linear-gradient(to bottom, rgba(118, 226, 0, 0.08) 1px, transparent 1px),
+                radial-gradient(circle at 15% 25%, rgba(255, 0, 127, 0.06) 0%, transparent 35%),
+                radial-gradient(circle at 85% 75%, rgba(118, 226, 0, 0.06) 0%, transparent 35%);
+            background-size: 40px 40px, 40px 40px, 100% 100%, 100% 100%;
+            background-attachment: fixed;
+        }
+
+        /* =========================================================
+           2. SUBTIELE CRT SCANLINES & VHS OVERLAY (LEESBAARHEID 100%)
+           ========================================================= */
+        .crt-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            pointer-events: none;
+            z-index: 9999;
+            background: linear-gradient(
+                rgba(18, 16, 16, 0) 50%, 
+                rgba(0, 0, 0, 0.22) 50%
+            );
+            background-size: 100% 4px;
+            opacity: 0.45;
+        }
+
+        /* =========================================================
+           3. MEMPHIS PATRONEN & RETRO TICKER / LICHTKRANT
+           ========================================================= */
+        .retro-bar {
+            height: 14px;
+            width: 100%;
+            background: repeating-linear-gradient(
+                -45deg,
+                var(--accent-pink),
+                var(--accent-pink) 15px,
+                var(--accent-green) 15px,
+                var(--accent-green) 30px,
+                var(--accent-yellow) 30px,
+                var(--accent-yellow) 36px,
+                var(--bg-black) 36px,
+                var(--bg-black) 42px
+            );
+            border-top: 2px solid var(--bg-black);
+            border-bottom: 2px solid var(--bg-black);
+        }
+
+        /* 80's LED Lichtkrant / Ticker Tape */
+        .retro-ticker-wrap {
+            width: 100%;
+            background-color: var(--bg-black);
+            border-bottom: 3px solid var(--accent-yellow);
+            overflow: hidden;
+            padding: 8px 0;
+            position: relative;
+        }
+
+        .retro-ticker {
+            display: flex;
+            width: max-content;
+            animation: tickerScroll 26s linear infinite;
+            font-family: var(--font-pixel);
+            font-size: 0.72rem;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+            white-space: nowrap;
+        }
+
+        .retro-ticker:hover {
+            animation-play-state: paused;
+        }
+
+        .ticker-item {
+            padding: 0 30px;
+            color: var(--accent-yellow);
+            text-shadow: 0 0 6px rgba(255, 255, 0, 0.6);
+        }
+
+        .ticker-item span.pink { color: var(--accent-pink); }
+        .ticker-item span.green { color: var(--accent-green); }
+
+        @keyframes tickerScroll {
+            0% { transform: translateX(0); }
+            100% { transform: translateX(-50%); }
+        }
+
+        /* =========================================================
+           4. NAVIGATIEBALK (80'S ARCADE & MEMPHIS STYLE)
+           ========================================================= */
+        nav {
+            background-color: var(--bg-black);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            border-bottom: 4px solid var(--accent-pink);
+            box-shadow: 0 4px 0 var(--accent-green);
+        }
+
+        .nav-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 20px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .nav-email {
+            display: inline-flex;
+            align-items: center;
+            gap: 10px;
+            color: var(--bg-black);
+            background-color: var(--accent-yellow);
+            padding: 6px 12px;
+            text-decoration: none;
+            font-family: var(--font-mono);
+            font-weight: 700;
+            font-size: 0.85rem;
+            border: 2px solid var(--bg-black);
+            box-shadow: 4px 4px 0 var(--accent-pink);
+            transition: transform 0.15s ease, box-shadow 0.15s ease, background-color 0.15s ease;
+        }
+
+        .nav-email i {
+            font-size: 1rem;
+            color: var(--accent-pink);
+        }
+
+        .nav-email:hover {
+            background-color: var(--accent-green);
+            color: var(--bg-black);
+            transform: translate(-2px, -2px);
+            box-shadow: 6px 6px 0 var(--accent-pink);
+        }
+
+        .nav-links {
+            display: flex;
+            list-style: none;
+            gap: 14px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            display: inline-block;
+            text-decoration: none;
+            font-family: var(--font-display);
+            font-size: 0.95rem;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
+            padding: 6px 12px;
+            border: 2px solid transparent;
+            transition: all 0.15s ease;
+        }
+
+        /* Afwisselende Neon Kleuren & Harde 80s Hover in het Menu */
+        .nav-links li:nth-child(odd) a {
+            color: var(--accent-pink);
+            border-color: var(--accent-pink);
+            box-shadow: 3px 3px 0 var(--accent-green);
+        }
+
+        .nav-links li:nth-child(even) a {
+            color: var(--accent-green);
+            border-color: var(--accent-green);
+            box-shadow: 3px 3px 0 var(--accent-pink);
+        }
+
+        .nav-links li:nth-child(odd) a:hover {
+            background-color: var(--accent-pink);
+            color: var(--text-white);
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 var(--accent-yellow);
+        }
+
+        .nav-links li:nth-child(even) a:hover {
+            background-color: var(--accent-green);
+            color: var(--bg-black);
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 var(--accent-yellow);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: var(--accent-pink);
+            border: 2px solid var(--accent-yellow);
+            color: var(--text-white);
+            padding: 8px 12px;
+            font-size: 1.4rem;
+            cursor: pointer;
+            box-shadow: 4px 4px 0 var(--accent-green);
+        }
+
+        /* =========================================================
+           5. BANNER HEADER MET 1983 ZIGZAG & MEMPHIS GEOMETRIE
+           ========================================================= */
+        .banner-container {
+            width: 100%;
+            padding: 45px 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            position: relative;
+            overflow: hidden;
+            border-bottom: 6px solid var(--accent-green);
+            background-color: var(--accent-pink);
+            background-image: 
+                linear-gradient(135deg, var(--accent-green) 25%, transparent 25%),
+                linear-gradient(225deg, var(--accent-green) 25%, transparent 25%),
+                linear-gradient(315deg, var(--accent-green) 25%, transparent 25%),
+                linear-gradient(45deg, var(--accent-green) 25%, transparent 25%);
+            background-position: -30px 0, -30px 0, 0 0, 0 0;
+            background-size: 60px 60px;
+            background-repeat: repeat;
+        }
+
+        /* Decoratieve zwevende Memphis SVG-vormen in de banner */
+        .memphis-shape {
+            position: absolute;
+            pointer-events: none;
+            z-index: 1;
+            opacity: 0.9;
+        }
+
+        .shape-top-left {
+            top: 15px;
+            left: 25px;
+            animation: floatSlow 5s ease-in-out infinite;
+        }
+
+        .shape-bottom-right {
+            bottom: 15px;
+            right: 25px;
+            animation: floatSlow 6s ease-in-out infinite reverse;
+        }
+
+        @keyframes floatSlow {
+            0%, 100% { transform: translateY(0) rotate(0deg); }
+            50% { transform: translateY(-8px) rotate(6deg); }
+        }
+
+        .banner-frame {
+            position: relative;
+            z-index: 2;
+            background-color: var(--bg-black);
+            padding: 16px;
+            border: 5px solid var(--accent-yellow);
+            box-shadow: 12px 12px 0 var(--bg-black), 16px 16px 0 var(--accent-yellow);
+            max-width: 920px;
+            width: 100%;
+        }
+
+        .banner-badge {
+            position: absolute;
+            top: -18px;
+            right: 18px;
+            background-color: var(--accent-yellow);
+            color: var(--bg-black);
+            font-family: var(--font-pixel);
+            font-size: 0.65rem;
+            padding: 6px 12px;
+            border: 3px solid var(--bg-black);
+            box-shadow: 4px 4px 0 var(--accent-pink);
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .banner-img {
+            width: 100%;
+            height: auto;
+            object-fit: contain;
+            display: block;
+        }
+
+        /* =========================================================
+           6. MAIN CONTAINER & MEMPHIS SECTION HEADERS
+           ========================================================= */
+        .container {
+            max-width: 1120px;
+            margin: 0 auto;
+            padding: 50px 20px;
+            position: relative;
+        }
+
+        section {
+            margin-bottom: 75px;
+            position: relative;
+        }
+
+        .section-header-wrap {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+
+        .section-title {
+            font-family: var(--font-display);
+            font-size: 2.2rem;
+            color: var(--bg-black);
+            background-color: var(--accent-green);
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            padding: 10px 22px;
+            border: 3px solid var(--bg-black);
+            box-shadow: 7px 7px 0 var(--accent-pink);
+            display: inline-block;
+            position: relative;
+        }
+
+        .section-title::before {
+            content: "► ";
+            color: var(--accent-pink);
+        }
+
+        .section-tag {
+            font-family: var(--font-pixel);
+            font-size: 0.65rem;
+            color: var(--accent-yellow);
+            background-color: var(--bg-card);
+            border: 2px solid var(--accent-yellow);
+            padding: 6px 10px;
+            box-shadow: 4px 4px 0 var(--accent-pink);
+        }
+
+        /* =========================================================
+           7. SOCIAL MEDIA SECTION (80'S ARCADE CABINET / STICKER STYLE)
+           ========================================================= */
+        .socials-section {
+            text-align: center;
+            background: var(--bg-card);
+            padding: 32px 24px;
+            border: 4px solid var(--accent-pink);
+            box-shadow: 10px 10px 0 var(--accent-green);
+            position: relative;
+            /* Subtiel Memphis stippenpatroon in de hoek */
+            background-image: radial-gradient(var(--accent-yellow) 1.5px, transparent 1.5px);
+            background-size: 22px 22px;
+        }
+
+        .socials-inner {
+            background-color: var(--bg-card);
+            display: inline-block;
+            padding: 20px 35px;
+            border: 3px solid var(--accent-yellow);
+            box-shadow: 6px 6px 0 var(--bg-black);
+        }
+
+        .socials-title {
+            font-family: var(--font-display);
+            color: var(--accent-green);
+            font-size: 2rem;
+            text-transform: uppercase;
+            margin-bottom: 8px;
+            letter-spacing: 2px;
+            text-shadow: 3px 3px 0 var(--accent-pink);
+        }
+
+        .socials-sub {
+            font-family: var(--font-mono);
+            font-size: 0.85rem;
+            color: var(--accent-yellow);
+            margin-bottom: 20px;
+            text-transform: uppercase;
+        }
+
+        .socials-grid {
+            display: flex;
+            justify-content: center;
+            gap: 24px;
+            flex-wrap: wrap;
+        }
+
+        .social-card {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            padding: 14px 24px;
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            text-decoration: none;
+            font-family: var(--font-pixel);
+            font-size: 0.75rem;
+            border: 3px solid var(--accent-green);
+            box-shadow: 6px 6px 0 var(--accent-pink);
+            transition: all 0.15s ease;
+        }
+
+        .social-card:hover {
+            transform: translate(-3px, -3px);
+            background-color: var(--accent-pink);
+            color: var(--text-white);
+            border-color: var(--accent-yellow);
+            box-shadow: 9px 9px 0 var(--accent-green);
+        }
+
+        .social-card i {
+            font-size: 1.4rem;
+            color: var(--accent-yellow);
+        }
+
+        /* =========================================================
+           8. MEDIA SECTION: VHS / POLAROID 1983 FRAME
+           ========================================================= */
+        .vhs-photo-wrapper {
+            max-width: 920px;
+            margin: 0 auto;
+            background-color: var(--bg-card);
+            border: 4px solid var(--accent-green);
+            box-shadow: 12px 12px 0 var(--accent-pink);
+            padding: 16px;
+            position: relative;
+        }
+
+        .vhs-hud-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: var(--bg-black);
+            padding: 8px 14px;
+            margin-bottom: 12px;
+            border: 2px solid var(--accent-pink);
+            font-family: var(--font-pixel);
+            font-size: 0.65rem;
+        }
+
+        .vhs-rec {
+            color: var(--accent-pink);
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .rec-dot {
+            display: inline-block;
+            width: 10px;
+            height: 10px;
+            background-color: var(--accent-pink);
+            animation: blinkRec 1.1s steps(2, start) infinite;
+        }
+
+        @keyframes blinkRec {
+            to { visibility: hidden; }
+        }
+
+        .vhs-timestamp {
+            color: var(--accent-green);
+        }
+
+        .single-photo-container {
+            width: 100%;
+            border: 3px solid var(--accent-yellow);
+            overflow: hidden;
+            background-color: var(--bg-black);
+            position: relative;
+        }
+
+        .single-photo-container img {
+            width: 100%;
+            height: auto;
+            display: block;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+
+        .vhs-photo-wrapper:hover .single-photo-container img {
+            transform: scale(1.015);
+        }
+
+        /* =========================================================
+           9. LIVE AGENDA SECTION (80'S CONCERT TICKET / CASSETTE STYLE)
+           ========================================================= */
+        .agenda-list {
+            display: flex;
+            flex-direction: column;
+            gap: 28px;
+        }
+
+        .agenda-item {
+            display: flex;
+            align-items: stretch;
+            background-color: var(--bg-card);
+            border: 4px solid var(--accent-green);
+            box-shadow: 10px 10px 0 var(--accent-pink);
+            position: relative;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .agenda-item:hover {
+            transform: translate(-3px, -3px);
+            box-shadow: 13px 13px 0 var(--accent-yellow);
+        }
+
+        /* Geperforeerde ticket-scheurlijn aan de linkerkant */
+        .agenda-date {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-black);
+            border-right: 4px dashed var(--accent-yellow);
+            padding: 18px 22px;
+            min-width: 130px;
+            text-align: center;
+            position: relative;
+        }
+
+        .agenda-date::before {
+            content: "ADMIT ONE";
+            font-family: var(--font-pixel);
+            font-size: 0.45rem;
+            color: var(--accent-pink);
+            margin-bottom: 6px;
+            letter-spacing: 1px;
+        }
+
+        .agenda-date .day {
+            font-family: var(--font-display);
+            font-size: 2.5rem;
+            color: var(--accent-green);
+            line-height: 1;
+            text-shadow: 3px 3px 0 var(--accent-pink);
+        }
+
+        .agenda-date .month {
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+            text-transform: uppercase;
+            color: var(--accent-yellow);
+            font-weight: 700;
+            margin-top: 6px;
+        }
+
+        .agenda-details {
+            flex-grow: 1;
+            padding: 20px 25px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+        }
+
+        .agenda-details h3 {
+            font-family: var(--font-display);
+            font-size: 1.8rem;
+            color: var(--accent-green);
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+        }
+
+        .agenda-details p {
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            color: var(--text-white);
+        }
+
+        .agenda-action {
+            display: flex;
+            align-items: center;
+            padding: 20px 25px;
+            background-color: rgba(13, 13, 13, 0.4);
+            border-left: 2px solid #2b2b2b;
+        }
+
+        .btn-ticket {
+            display: inline-block;
+            background-color: var(--accent-pink);
+            color: var(--text-white);
+            border: 3px solid var(--bg-black);
+            padding: 14px 22px;
+            text-decoration: none;
+            font-family: var(--font-pixel);
+            font-size: 0.72rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            box-shadow: 5px 5px 0 var(--accent-green);
+            transition: all 0.15s ease;
+            white-space: nowrap;
+        }
+
+        .btn-ticket:hover {
+            background-color: var(--accent-yellow);
+            color: var(--bg-black);
+            transform: translate(-2px, -2px);
+            box-shadow: 7px 7px 0 var(--accent-pink);
+        }
+
+        /* =========================================================
+           10. NIEUWS & UPDATES (80'S TELETEXT / FLOPPY DISC CARD)
+           ========================================================= */
+        .news-card {
+            background-color: var(--bg-card);
+            border: 4px solid var(--accent-pink);
+            padding: 0;
+            box-shadow: 10px 10px 0 var(--accent-green);
+        }
+
+        .news-topbar {
+            background-color: var(--accent-pink);
+            color: var(--bg-black);
+            padding: 8px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-family: var(--font-pixel);
+            font-size: 0.65rem;
+            border-bottom: 3px solid var(--bg-black);
+        }
+
+        .news-topbar .news-date {
+            background-color: var(--accent-yellow);
+            color: var(--bg-black);
+            padding: 4px 8px;
+            font-weight: 700;
+        }
+
+        .news-body {
+            padding: 26px;
+        }
+
+        .news-body h3 {
+            font-family: var(--font-display);
+            font-size: 1.85rem;
+            color: var(--accent-green);
+            margin-bottom: 14px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 2px 2px 0 var(--bg-black);
+        }
+
+        .news-body p {
+            color: var(--text-white);
+            font-size: 1.08rem;
+            line-height: 1.7;
+        }
+
+        /* =========================================================
+           11. BIO & CASSETTEBANDJE BANDBEZETTING
+           ========================================================= */
+        .bio-grid {
+            display: grid;
+            grid-template-columns: 1.6fr 1.1fr;
+            gap: 35px;
+            align-items: start;
+        }
+
+        .bio-text {
+            background-color: var(--bg-card);
+            padding: 28px;
+            border: 4px solid var(--accent-green);
+            box-shadow: 10px 10px 0 var(--accent-pink);
+        }
+
+        .bio-text p {
+            margin-bottom: 18px;
+            font-size: 1.06rem;
+            color: var(--text-white);
+        }
+
+        .bio-text p:last-child {
+            margin-bottom: 0;
+        }
+
+        .bio-text strong {
+            color: var(--accent-yellow);
+        }
+
+        /* Authentiek Jaren '80 Cassettebandje voor de Bandbezetting */
+        .cassette-card {
+            background-color: var(--bg-card);
+            border: 4px solid var(--accent-pink);
+            box-shadow: 10px 10px 0 var(--accent-yellow);
+            padding: 16px;
+            position: relative;
+        }
+
+        /* Cassette schroefjes op de hoeken */
+        .cassette-screws {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 8px;
+            font-family: var(--font-mono);
+            font-size: 0.75rem;
+            color: var(--text-muted);
+        }
+
+        /* Het gekleurde cassette-label */
+        .cassette-label {
+            background-color: var(--accent-yellow);
+            color: var(--bg-black);
+            padding: 12px 14px;
+            border: 3px solid var(--bg-black);
+            margin-bottom: 14px;
+        }
+
+        .cassette-label-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 2px solid var(--bg-black);
+            padding-bottom: 6px;
+            margin-bottom: 8px;
+            font-family: var(--font-pixel);
+            font-size: 0.6rem;
+        }
+
+        .cassette-side {
+            background-color: var(--bg-black);
+            color: var(--accent-yellow);
+            padding: 3px 6px;
+        }
+
+        .cassette-label h3 {
+            font-family: var(--font-display);
+            font-size: 1.5rem;
+            text-transform: uppercase;
+            color: var(--bg-black);
+            letter-spacing: 1px;
+        }
+
+        /* De draaiende spoelen van het cassettebandje */
+        .cassette-reels {
+            background-color: var(--bg-black);
+            border: 3px solid var(--accent-green);
+            padding: 12px 20px;
+            margin-bottom: 16px;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+        }
+
+        .reel {
+            width: 44px;
+            height: 44px;
+            border: 4px dashed var(--accent-pink);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            animation: spinReel 8s linear infinite;
+        }
+
+        .reel-center {
+            width: 14px;
+            height: 14px;
+            background-color: var(--accent-yellow);
+            border: 2px solid var(--accent-green);
+        }
+
+        .tape-window {
+            width: 75px;
+            height: 22px;
+            background-color: var(--bg-card);
+            border: 2px solid var(--accent-yellow);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .tape-window::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 55%;
+            height: 100%;
+            background: repeating-linear-gradient(
+                90deg,
+                var(--accent-pink),
+                var(--accent-pink) 4px,
+                var(--accent-green) 4px,
+                var(--accent-green) 8px
+            );
+        }
+
+        @keyframes spinReel {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+
+        /* Tracklist / Bandleden */
+        .band-list {
+            list-style: none;
+            font-family: var(--font-mono);
+        }
+
+        .band-list li {
+            padding: 8px 10px;
+            border-bottom: 2px dashed #333;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.92rem;
+            transition: background-color 0.15s ease, transform 0.15s ease;
+        }
+
+        .band-list li:last-child {
+            border-bottom: none;
+        }
+
+        .band-list li:hover {
+            background-color: var(--bg-black);
+            transform: translateX(4px);
+        }
+
+        .band-list .member-name {
+            color: var(--text-white);
+            font-weight: 700;
+        }
+
+        .band-list .member-name::before {
+            content: "▪ ";
+            color: var(--accent-green);
+        }
+
+        .band-list .role {
+            color: var(--accent-pink);
+            font-weight: 700;
+            text-transform: uppercase;
+            font-size: 0.82rem;
+        }
+
+        /* =========================================================
+           12. CONTACT SECTION (NEON ARCADE / MEMPHIS CALLOUT)
+           ========================================================= */
+        .contact-box {
+            background-color: var(--accent-pink);
+            color: var(--text-white);
+            padding: 45px 30px;
+            text-align: center;
+            border: 5px solid var(--accent-yellow);
+            box-shadow: 12px 12px 0 var(--accent-green);
+            position: relative;
+            background-image: 
+                linear-gradient(45deg, rgba(13, 13, 13, 0.14) 25%, transparent 25%), 
+                linear-gradient(-45deg, rgba(13, 13, 13, 0.14) 25%, transparent 25%);
+            background-size: 24px 24px;
+        }
+
+        .contact-box h2 {
+            font-family: var(--font-display);
+            text-transform: uppercase;
+            font-size: 2.4rem;
+            color: var(--accent-yellow);
+            margin-bottom: 14px;
+            letter-spacing: 2px;
+            text-shadow: 4px 4px 0 var(--bg-black);
+        }
+
+        .contact-box p {
+            font-family: var(--font-mono);
+            font-size: 1.15rem;
+            font-weight: 700;
+            margin-bottom: 28px;
+            color: var(--text-white);
+            background-color: var(--bg-black);
+            display: inline-block;
+            padding: 8px 18px;
+            border: 2px solid var(--accent-green);
+        }
+
+        .contact-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            flex-wrap: wrap;
+        }
+
+        .btn-email {
+            display: inline-flex;
+            align-items: center;
+            gap: 12px;
+            background-color: var(--bg-black);
+            color: var(--accent-green);
+            padding: 16px 32px;
+            text-decoration: none;
+            font-family: var(--font-pixel);
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            border: 4px solid var(--accent-green);
+            box-shadow: 7px 7px 0 var(--accent-yellow);
+            transition: all 0.15s ease;
+        }
+
+        .btn-email:hover {
+            background-color: var(--accent-green);
+            color: var(--bg-black);
+            border-color: var(--bg-black);
+            transform: translate(-3px, -3px);
+            box-shadow: 10px 10px 0 var(--accent-yellow);
+        }
+
+        /* =========================================================
+           13. FOOTER
+           ========================================================= */
+        footer {
+            background-color: var(--bg-black);
+            padding: 35px 20px;
+            text-align: center;
+            color: var(--text-muted);
+            border-top: 4px solid var(--accent-pink);
+            font-family: var(--font-mono);
+            font-size: 0.9rem;
+        }
+
+        footer .footer-badge {
+            display: inline-block;
+            margin-top: 10px;
+            font-family: var(--font-pixel);
+            font-size: 0.6rem;
+            color: var(--accent-yellow);
+            border: 2px solid var(--accent-green);
+            padding: 5px 10px;
+        }
+
+        /* =========================================================
+           14. SCROLL REVEAL / FADE-IN ANIMATIES
+           ========================================================= */
+        .reveal-item {
+            opacity: 0;
+            transform: translateY(32px);
+            transition: opacity 0.65s cubic-bezier(0.22, 1, 0.36, 1),
+                        transform 0.65s cubic-bezier(0.22, 1, 0.36, 1);
+            will-change: opacity, transform;
+        }
+
+        .reveal-item.is-visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            .reveal-item {
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+        }
+
+        /* =========================================================
+           15. RESPONSIVE MOBILE STYLES
+           ========================================================= */
+        @media (max-width: 860px) {
+            .bio-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-container {
+                padding: 12px 15px;
+            }
+
+            .nav-email {
+                font-size: 0.72rem;
+                padding: 5px 8px;
+            }
+
+            .mobile-menu-btn {
+                display: block;
+            }
+
+            .nav-links {
+                display: none;
+                flex-direction: column;
+                position: absolute;
+                top: 100%;
+                left: 0;
+                width: 100%;
+                background-color: var(--bg-black);
+                padding: 20px;
+                border-bottom: 4px solid var(--accent-pink);
+                border-top: 2px solid var(--accent-green);
+                gap: 14px;
+            }
+
+            .nav-links.active {
+                display: flex;
+            }
+
+            .nav-links li,
+            .nav-links a {
+                width: 100%;
+                text-align: center;
+            }
+
+            .banner-container {
+                padding: 30px 15px;
+            }
+
+            .memphis-shape {
+                display: none;
+            }
+
+            .agenda-item {
+                flex-direction: column;
+                align-items: stretch;
+            }
+
+            .agenda-date {
+                border-right: none;
+                border-bottom: 4px dashed var(--accent-yellow);
+                flex-direction: row;
+                justify-content: space-between;
+                padding: 12px 20px;
+            }
+
+            .agenda-date::before {
+                margin-bottom: 0;
+            }
+
+            .agenda-details {
+                padding: 18px 20px;
+            }
+
+            .agenda-action {
+                border-left: none;
+                border-top: 2px solid #2b2b2b;
+                padding: 15px 20px;
+            }
+
+            .btn-ticket {
+                display: block;
+                width: 100%;
+                text-align: center;
+            }
+
+            .section-title {
+                font-size: 1.55rem;
+                padding: 8px 14px;
+            }
+
+            .contact-box h2 {
+                font-size: 1.7rem;
+            }
+
+            .btn-email {
+                font-size: 0.65rem;
+                padding: 14px 18px;
+                width: 100%;
+                justify-content: center;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Subtiele 80's CRT Scanline Overlay -->
+    <div class="crt-overlay" aria-hidden="true"></div>
+
+    <!-- 80's Memphis Accent Header -->
+    <div class="retro-bar"></div>
+
+    <!-- 80's Lichtkrant / LED Ticker -->
+    <div class="retro-ticker-wrap" aria-hidden="true">
+        <div class="retro-ticker">
+            <span class="ticker-item">★ RATTATA! DOE MAAR EXPERIENCE ★ <span class="pink">EVEN TERUG NAAR '83!</span> ★ 10-KOPPIGE NEDERPOP SENSATIE ★ <span class="green">BOEKINGEN: RATTATA.TRIBUTE@GMAIL.COM</span> ★ LIVE IN NOORD-BRABANT EN OMSTREKEN ★</span>
+            <span class="ticker-item">★ RATTATA! DOE MAAR EXPERIENCE ★ <span class="pink">EVEN TERUG NAAR '83!</span> ★ 10-KOPPIGE NEDERPOP SENSATIE ★ <span class="green">BOEKINGEN: RATTATA.TRIBUTE@GMAIL.COM</span> ★ LIVE IN NOORD-BRABANT EN OMSTREKEN ★</span>
+        </div>
+    </div>
+
+    <!-- Navigation -->
+    <nav>
+        <div class="nav-container">
+            <div class="nav-left">
+                <a href="mailto:rattata.tribute@gmail.com" class="nav-email" title="rattata.tribute@gmail.com">
+                    <i class="fas fa-envelope"></i>
+                    <span>rattata.tribute@gmail.com</span>
+                </a>
+            </div>
+
+            <button class="mobile-menu-btn" id="menuToggle" aria-label="Menu">
+                <i class="fas fa-bars"></i>
+            </button>
+            <ul class="nav-links" id="navLinks">
+                <li><a href="#home">Home</a></li>
+                <li><a href="#media">Media</a></li>
+                <li><a href="#agenda">Agenda</a></li>
+                <li><a href="#news">Nieuws</a></li>
+                <li><a href="#about">Over de Band</a></li>
+                <li><a href="#contact">Contact</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Top Banner Image met Zigzag Achtergrond & Memphis Geometrie -->
+    <header class="banner-container" id="home">
+        <!-- Memphis SVG Vorm Linksboven -->
+        <svg class="memphis-shape shape-top-left" width="110" height="110" viewBox="0 0 110 110" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <polygon points="55,10 100,90 10,90" fill="#ffff00" stroke="#0d0d0d" stroke-width="5"/>
+            <polygon points="45,22 90,102 0,102" fill="none" stroke="#0d0d0d" stroke-width="4"/>
+            <polyline points="10,20 25,10 40,20 55,10 70,20" stroke="#0d0d0d" stroke-width="4" fill="none"/>
+        </svg>
+
+        <!-- Memphis SVG Vorm Rechtsonder -->
+        <svg class="memphis-shape shape-bottom-right" width="120" height="120" viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+            <rect x="20" y="20" width="65" height="65" fill="#0d0d0d" stroke="#ffff00" stroke-width="5"/>
+            <rect x="35" y="35" width="65" height="65" fill="#ffff00" stroke="#0d0d0d" stroke-width="5"/>
+            <line x1="10" y1="105" x2="110" y2="15" stroke="#0d0d0d" stroke-width="5"/>
+        </svg>
+
+        <div class="banner-frame">
+            <div class="banner-badge">STEREO • 1983 EDITION</div>
+            <img src="RATTATALOGO.jpg" alt="RATTATA! Doe Maar Experience Banner Logo" class="banner-img" onerror="this.onerror=null; this.src='https://placehold.co/1000x350/ff007f/76e200?text=RATTATA!+Doe+Maar+Experience';">
+        </div>
+    </header>
+
+    <!-- 80's Memphis Accent Divider -->
+    <div class="retro-bar"></div>
+
+    <main class="container">
+        
+        <!-- Socials Section -->
+        <section class="socials-section reveal-item">
+            <div class="socials-inner">
+                <h2 class="socials-title">Volg RATTATA!</h2>
+                <p class="socials-sub">[ CONNECT MET DE BAND OP SOCIAL MEDIA ]</p>
+                <div class="socials-grid">
+                    <a href="https://www.facebook.com/profile.php?id=61586258830806&locale=nl_NL" target="_blank" rel="noopener noreferrer" class="social-card facebook" title="Facebook" aria-label="Facebook">
+                        <i class="fab fa-facebook-f"></i>
+                        <span>FACEBOOK</span>
+                    </a>
+                    <a href="https://www.instagram.com/rattata_doemaarexperience/" target="_blank" rel="noopener noreferrer" class="social-card instagram" title="Instagram" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                        <span>INSTAGRAM</span>
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Media Section: Bandfoto in VHS / 1983 TV Monitor stijl -->
+        <section id="media" class="reveal-item">
+            <div class="section-header-wrap">
+                <h2 class="section-title">Foto</h2>
+                <span class="section-tag">CH 03 • VHS HI-FI</span>
+            </div>
+            <div class="vhs-photo-wrapper reveal-item">
+                <div class="vhs-hud-top">
+                    <span class="vhs-rec"><span class="rec-dot"></span> PLAY ► RATTATA! LIVE</span>
+                    <span class="vhs-timestamp">SP • 19:83:00</span>
+                </div>
+                <div class="single-photo-container">
+                    <img src="RATTATA.jpg" alt="RATTATA! Bandfoto" onerror="this.onerror=null; this.src='https://placehold.co/900x500/181818/76e200?text=RATTATA!+Bandfoto';">
+                </div>
+            </div>
+        </section>
+
+        <!-- Live Agenda Section (80's Concert Tickets) -->
+        <section id="agenda">
+            <div class="section-header-wrap reveal-item">
+                <h2 class="section-title">Live Agenda</h2>
+                <span class="section-tag">TOUR DATES</span>
+            </div>
+            <div class="agenda-list" id="agendaList">
+                <!-- Show 1: 19 feb 2027 -->
+                <div class="agenda-item reveal-item">
+                    <div class="agenda-date">
+                        <span class="day">19</span>
+                        <span class="month">FEB 2027</span>
+                    </div>
+                    <div class="agenda-details">
+                        <h3>Kim's Kroeg</h3>
+                        <p><i class="fas fa-map-marker-alt" style="color: var(--accent-pink);"></i> Tilburg &nbsp;|&nbsp; <i class="fas fa-clock" style="color: var(--accent-yellow);"></i> Aanvang 21:00</p>
+                    </div>
+                    <div class="agenda-action">
+                        <a href="https://kimskroeg.nl/" target="_blank" rel="noopener noreferrer" class="btn-ticket">Info &amp; Locatie</a>
+                    </div>
+                </div>
+
+                <!-- Show 2: 27 juni 2027 -->
+                <div class="agenda-item reveal-item">
+                    <div class="agenda-date">
+                        <span class="day">27</span>
+                        <span class="month">JUN 2027</span>
+                    </div>
+                    <div class="agenda-details">
+                        <h3>Café Taverne</h3>
+                        <p><i class="fas fa-map-marker-alt" style="color: var(--accent-pink);"></i> Tilburg &nbsp;|&nbsp; <i class="fas fa-clock" style="color: var(--accent-yellow);"></i> Aanvang 21:00</p>
+                    </div>
+                    <div class="agenda-action">
+                        <a href="https://www.cafetavernetilburg.nl/" target="_blank" rel="noopener noreferrer" class="btn-ticket">Info &amp; Locatie</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Nieuws & Updates Sectie -->
+        <section id="news" class="reveal-item">
+            <div class="section-header-wrap">
+                <h2 class="section-title">Nieuws &amp; Updates</h2>
+                <span class="section-tag">TELETEKST P.101</span>
+            </div>
+            <div class="news-card reveal-item">
+                <div class="news-topbar">
+                    <span>★ PERSBERICHT // RATTATA!</span>
+                    <span class="news-date">November 2025</span>
+                </div>
+                <div class="news-body">
+                    <h3>Naamsverandering naar RATTATA!</h3>
+                    <p>Met trots maken we bekend dat de bandnaam is veranderd van Toe Maar Experience naar <strong>RATTATA!</strong>. Dit werd feestelijk onthuld op 7 november tijdens onze show in Café Taverne in Tilburg.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Band Bio & Cassettebandje Line-up -->
+        <section id="about">
+            <div class="section-header-wrap reveal-item">
+                <h2 class="section-title">Over de Band</h2>
+                <span class="section-tag">NEDERPOP '83</span>
+            </div>
+            <div class="bio-grid">
+                <div class="bio-text reveal-item">
+                    <p><strong>RATTATA! (voorheen Toe Maar Experience)</strong> is een tienkoppige Doe Maar-tribute band uit Noord-Brabant en omstreken, opgericht in september 2025 door Enzo Smit, die samen één missie delen: de energie, het gevoel en de unieke sound van Doe Maar opnieuw tot leven brengen — groter, voller en dynamischer dan ooit.</p>
+                    
+                    <p>Met een repertoire aan hits brengt <strong>RATTATA!</strong> zowel de iconische klassiekers als de minder bekende parels. De band speelt single-versies, live-versies en zorgvuldig uitgewerkte arrangementen die het origineel respecteren maar live nóg beter werken.</p>
+
+                    <p>De blazerssectie vormt het herkenbare hart van de Nederpop-sound, ondersteund door een uitgebreide ritmesectie, keys, gitaar. RATTATA! rijk, energiek en authentiek — een live-ervaring die het publiek moeiteloos terugvoert naar de hoogtijdagen van RATTATA! staat garant voor een avond vol nostalgie, dansbaarheid en pure liefde voor Nederpop. Even terug naar ‘83!</p>
+                </div>
+
+                <!-- 80's Cassettebandje Sidebar -->
+                <div class="bio-sidebar reveal-item">
+                    <div class="cassette-card">
+                        <div class="cassette-screws" aria-hidden="true">
+                            <span>[+]</span>
+                            <span>C-90 • TYPE II CrO2</span>
+                            <span>[+]</span>
+                        </div>
+                        <div class="cassette-label">
+                            <div class="cassette-label-top">
+                                <span class="cassette-side">KANT A</span>
+                                <span>DOLBY NR [ON]</span>
+                            </div>
+                            <h3>Bandbezetting</h3>
+                        </div>
+
+                        <!-- Draaiende Cassette Spoelen -->
+                        <div class="cassette-reels" aria-hidden="true">
+                            <div class="reel"><div class="reel-center"></div></div>
+                            <div class="tape-window"></div>
+                            <div class="reel"><div class="reel-center"></div></div>
+                        </div>
+
+                        <ul class="band-list">
+                            <li><span class="member-name">Johar</span> <span class="role">Leadzang</span></li>
+                            <li><span class="member-name">Sebas</span> <span class="role">Leadzang</span></li>
+                            <li><span class="member-name">Silvan</span> <span class="role">Gitaar</span></li>
+                            <li><span class="member-name">Enzo</span> <span class="role">Basgitaar</span></li>
+                            <li><span class="member-name">Michael</span> <span class="role">Keys</span></li>
+                            <li><span class="member-name">Hans</span> <span class="role">Drums</span></li>
+                            <li><span class="member-name">Kiki</span> <span class="role">Backing vocals</span></li>
+                            <li><span class="member-name">Lauraine</span> <span class="role">Backing vocals</span></li>
+                            <li><span class="member-name">Ellemieke</span> <span class="role">Trombone</span></li>
+                            <li><span class="member-name">Lieke</span> <span class="role">Trompet</span></li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section -->
+        <section id="contact" class="reveal-item">
+            <div class="contact-box">
+                <h2>Boekingen &amp; Contact</h2>
+                <p>Wil je RATTATA! op jouw podium, festival of feest?</p>
+                <div class="contact-buttons">
+                    <a href="mailto:rattata.tribute@gmail.com" class="btn-email">
+                        <i class="fas fa-envelope"></i> Mail rattata.tribute@gmail.com
+                    </a>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- 80's Memphis Accent Divider -->
+    <div class="retro-bar"></div>
+
+    <!-- Footer -->
+    <footer>
+        <p>&copy; 2026 RATTATA! Doe Maar Experience. Alle rechten voorbehouden.</p>
+        <div class="footer-badge">★ EVEN TERUG NAAR '83 ★</div>
+    </footer>
+
+    <!-- Scripts -->
+    <script>
+        // Mobile Menu Toggle
+        const menuToggle = document.getElementById('menuToggle');
+        const navLinks = document.getElementById('navLinks');
+
+        menuToggle.addEventListener('click', () => {
+            navLinks.classList.toggle('active');
+        });
+
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                navLinks.classList.remove('active');
+            });
+        });
+
+        // Scroll Reveal / Fade-In met IntersectionObserver
+        const revealElements = document.querySelectorAll('.reveal-item');
+
+        if ('IntersectionObserver' in window) {
+            const revealObserver = new IntersectionObserver((entries, observer) => {
+                entries.forEach((entry) => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add('is-visible');
+                        observer.unobserve(entry.target);
+                    }
+                });
+            }, {
+                threshold: 0.12,
+                rootMargin: '0px 0px -40px 0px'
+            });
+
+            revealElements.forEach((el) => revealObserver.observe(el));
+        } else {
+            // Fallback voor oudere browsers
+            revealElements.forEach((el) => el.classList.add('is-visible'));
+        }
+    </script>
+</body>
+</html>
