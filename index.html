@@ -1564,7 +1564,7 @@
                         </div>
 
                         <button type="button" class="btn-tv-next" id="tvNextBtn" aria-label="Volgende filmpje">
-                            VOLGENDE ►<br><span id="tvNextSub" style="font-size: 0.5rem; color: var(--accent-yellow);">rattata.mp4</span>
+                            VOLGENDE ►
                         </button>
 
                         <div class="tv-speaker-grille" aria-hidden="true"></div>
@@ -1775,8 +1775,8 @@
 
         // Oude Beeldbuis TV Kanaalschakelaar
         const tvPlaylist = [
-            { src: 'smoorverliefd.mp4', title: 'SMOORVERLIEFD.MP4', channel: 'CH 01', nextLabel: 'rattata.mp4' },
-            { src: 'rattata.mp4', title: 'RATTATA.MP4', channel: 'CH 02', nextLabel: 'smoorverliefd.mp4' }
+            { src: 'smoorverliefd.mp4', title: 'SMOORVERLIEFD.MP4', channel: 'CH 01' },
+            { src: 'rattata.mp4', title: 'RATTATA.MP4', channel: 'CH 02' }
         ];
         let currentTvIndex = 0;
 
@@ -1784,7 +1784,6 @@
         const tvNextBtn = document.getElementById('tvNextBtn');
         const tvChannelLabel = document.getElementById('tvChannelLabel');
         const tvVideoLabel = document.getElementById('tvVideoLabel');
-        const tvNextSub = document.getElementById('tvNextSub');
         const tvChannelDial = document.getElementById('tvChannelDial');
         const tvStaticFlash = document.getElementById('tvStaticFlash');
 
@@ -1803,7 +1802,6 @@
                     retroTvVideo.play().catch(() => {});
                     tvChannelLabel.textContent = item.channel;
                     tvVideoLabel.textContent = item.title;
-                    tvNextSub.textContent = item.nextLabel;
                     tvStaticFlash.classList.remove('active');
                 }, 160);
             });
