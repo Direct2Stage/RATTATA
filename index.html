@@ -1106,7 +1106,7 @@
         }
 
         /* =========================================================
-           12. CONTACT SECTION (NEON ARCADE / MEMPHIS CALLOUT)
+           12. CONTACT CALLOUT & AANVRAAG BOEKING POPUP (80'S MODAL)
            ========================================================= */
         .contact-box {
             background-color: var(--accent-pink);
@@ -1151,28 +1151,226 @@
             flex-wrap: wrap;
         }
 
-        .btn-email {
+        .btn-open-booking {
             display: inline-flex;
             align-items: center;
             gap: 12px;
             background-color: var(--bg-black);
             color: var(--accent-green);
-            padding: 16px 32px;
-            text-decoration: none;
+            padding: 18px 32px;
             font-family: var(--font-pixel);
-            font-size: 0.8rem;
+            font-size: 0.85rem;
             text-transform: uppercase;
+            letter-spacing: 1px;
             border: 4px solid var(--accent-green);
             box-shadow: 7px 7px 0 var(--accent-yellow);
+            cursor: pointer;
             transition: all 0.15s ease;
         }
 
-        .btn-email:hover {
+        .btn-open-booking:hover {
             background-color: var(--accent-green);
             color: var(--bg-black);
             border-color: var(--bg-black);
             transform: translate(-3px, -3px);
             box-shadow: 10px 10px 0 var(--accent-yellow);
+        }
+
+        /* Modal Overlay & 80's Popup Card */
+        .booking-modal-overlay {
+            position: fixed;
+            inset: 0;
+            background-color: rgba(13, 13, 13, 0.88);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            overflow-y: auto;
+        }
+
+        .booking-modal-overlay.is-open {
+            display: flex;
+        }
+
+        .booking-card {
+            width: 100%;
+            max-width: 780px;
+            margin: auto;
+            background-color: var(--bg-card);
+            border: 4px solid var(--accent-pink);
+            box-shadow: 12px 12px 0 var(--accent-green);
+            overflow: hidden;
+            position: relative;
+            animation: modalPopIn 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+
+        @keyframes modalPopIn {
+            from {
+                opacity: 0;
+                transform: scale(0.95) translateY(12px);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1) translateY(0);
+            }
+        }
+
+        .booking-topbar {
+            background-color: var(--accent-pink);
+            color: var(--bg-black);
+            padding: 12px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            font-family: var(--font-pixel);
+            font-size: 0.65rem;
+            border-bottom: 3px solid var(--bg-black);
+        }
+
+        .btn-close-booking {
+            background-color: var(--accent-yellow);
+            color: var(--bg-black);
+            border: 2px solid var(--bg-black);
+            padding: 6px 10px;
+            font-family: var(--font-pixel);
+            font-size: 0.65rem;
+            font-weight: 700;
+            cursor: pointer;
+            box-shadow: 3px 3px 0 var(--bg-black);
+            transition: transform 0.1s ease, background-color 0.15s ease;
+        }
+
+        .btn-close-booking:hover {
+            background-color: var(--accent-green);
+            transform: translate(-1px, -1px);
+        }
+
+        .booking-body {
+            padding: 28px 30px;
+        }
+
+        .booking-intro {
+            font-family: var(--font-mono);
+            font-size: 1rem;
+            color: var(--accent-yellow);
+            background-color: var(--bg-black);
+            border: 2px solid var(--accent-green);
+            padding: 14px 18px;
+            margin-bottom: 26px;
+            text-align: center;
+        }
+
+        .booking-form-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 22px 24px;
+            margin-bottom: 24px;
+        }
+
+        .booking-form .form-group {
+            margin-bottom: 0;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .booking-form .form-group.full-width {
+            grid-column: 1 / -1;
+        }
+
+        .booking-form label {
+            display: block;
+            margin-bottom: 9px;
+            font-family: var(--font-pixel);
+            font-size: 0.68rem;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            color: var(--accent-green);
+        }
+
+        .booking-form label .req-star {
+            color: var(--accent-pink);
+        }
+
+        .booking-form input[type="text"],
+        .booking-form input[type="email"],
+        .booking-form input[type="date"] {
+            width: 100%;
+            height: 52px;
+            padding: 12px 16px;
+            border: 3px solid var(--accent-green);
+            background-color: var(--bg-black);
+            color: var(--text-white);
+            font-family: var(--font-mono);
+            font-size: 0.96rem;
+            box-shadow: 4px 4px 0 var(--accent-pink);
+            transition: border-color 0.15s ease, box-shadow 0.15s ease, transform 0.15s ease;
+        }
+
+        .booking-form input[type="text"]::placeholder,
+        .booking-form input[type="email"]::placeholder {
+            color: #888888;
+        }
+
+        .booking-form input[type="text"]:focus,
+        .booking-form input[type="email"]:focus,
+        .booking-form input[type="date"]:focus {
+            outline: none;
+            border-color: var(--accent-yellow);
+            box-shadow: 6px 6px 0 var(--accent-green);
+            transform: translate(-1px, -1px);
+        }
+
+        /* Zorgt ervoor dat het kalender-icoontje goed zichtbaar is op donkere achtergrond */
+        .booking-form input[type="date"]::-webkit-calendar-picker-indicator {
+            filter: invert(1);
+            cursor: pointer;
+        }
+
+        .booking-note {
+            font-family: var(--font-mono);
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-bottom: 14px;
+            text-align: right;
+        }
+
+        .booking-note span {
+            color: var(--accent-pink);
+            font-weight: 700;
+        }
+
+        .btn-booking-submit {
+            width: 100%;
+            padding: 18px 24px;
+            background-color: var(--accent-pink);
+            color: var(--text-white);
+            border: 3px solid var(--bg-black);
+            font-family: var(--font-pixel);
+            font-size: 0.82rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            cursor: pointer;
+            box-shadow: 6px 6px 0 var(--accent-green);
+            transition: all 0.15s ease;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .btn-booking-submit:hover {
+            background-color: var(--accent-yellow);
+            color: var(--bg-black);
+            transform: translate(-3px, -3px);
+            box-shadow: 9px 9px 0 var(--accent-pink);
+        }
+
+        .btn-booking-submit:active {
+            transform: translate(1px, 1px);
+            box-shadow: 3px 3px 0 var(--accent-green);
         }
 
         /* =========================================================
@@ -1408,12 +1606,57 @@
                 padding: 8px 12px;
             }
 
-            .btn-email {
-                font-size: 0.6rem;
-                padding: 14px 12px;
+            .btn-open-booking {
+                font-size: 0.72rem;
+                padding: 15px 20px;
                 width: 100%;
                 justify-content: center;
-                word-break: break-all;
+            }
+
+            .booking-modal-overlay {
+                padding: 12px;
+                align-items: flex-start;
+            }
+
+            .booking-card {
+                box-shadow: 6px 6px 0 var(--accent-green);
+                margin: 12px auto;
+            }
+
+            .booking-topbar {
+                padding: 10px 14px;
+                font-size: 0.55rem;
+            }
+
+            .booking-body {
+                padding: 20px 16px;
+            }
+
+            .booking-form-grid {
+                grid-template-columns: 1fr;
+                gap: 18px;
+                margin-bottom: 18px;
+            }
+
+            .booking-form label {
+                font-size: 0.6rem;
+            }
+
+            .booking-form input[type="text"],
+            .booking-form input[type="email"],
+            .booking-form input[type="date"] {
+                height: 48px;
+                padding: 10px 12px;
+                font-size: 0.9rem;
+            }
+
+            .booking-note {
+                text-align: left;
+            }
+
+            .btn-booking-submit {
+                font-size: 0.68rem;
+                padding: 15px 16px;
             }
         }
     </style>
@@ -1677,18 +1920,72 @@
             </div>
         </section>
 
-        <!-- Contact Section -->
+        <!-- Contact & Aanvraag Boeking Section -->
         <section id="contact" class="reveal-item">
             <div class="contact-box">
                 <h2>Boekingen &amp; Contact</h2>
                 <p>Wil je RATTATA! op jouw podium, festival of feest?</p>
                 <div class="contact-buttons">
-                    <a href="mailto:rattata.tribute@gmail.com" class="btn-email">
-                        <i class="fas fa-envelope"></i> Mail rattata.tribute@gmail.com
-                    </a>
+                    <button type="button" class="btn-open-booking" id="openBookingBtn" aria-haspopup="dialog" aria-controls="bookingModal">
+                        <i class="fas fa-calendar-check"></i> Aanvraag boeking
+                    </button>
                 </div>
             </div>
         </section>
+
+        <!-- Popup Modal: Aanvraag Optreden -->
+        <div class="booking-modal-overlay" id="bookingModal" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle" hidden>
+            <div class="booking-card">
+                <div class="booking-topbar">
+                    <span id="bookingModalTitle">★ AANVRAAG BOEKING // RATTATA!</span>
+                    <button type="button" class="btn-close-booking" id="closeBookingBtn" aria-label="Sluit venster">
+                        SLUITEN [X]
+                    </button>
+                </div>
+                <div class="booking-body">
+                    <p class="booking-intro">Wil je RATTATA! op jouw podium, festival of feest? Vul het formulier hieronder in!</p>
+
+                    <form class="booking-form" action="https://formsubmit.co/rattata.tribute@gmail.com" method="POST">
+                        <!-- Optionele FormSubmit instellingen -->
+                        <input type="hidden" name="_subject" value="Nieuwe aanvraag voor een optreden!">
+                        <input type="hidden" name="_template" value="table">
+
+                        <div class="booking-form-grid">
+                            <div class="form-group">
+                                <label for="naam">Naam <span class="req-star">*</span></label>
+                                <input type="text" id="naam" name="Naam" placeholder="Jouw voor- en achternaam" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="mailadres">Mailadres <span class="req-star">*</span></label>
+                                <input type="email" id="mailadres" name="email" placeholder="naam@voorbeeld.nl" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="event-naam">Naam van event <span class="req-star">*</span></label>
+                                <input type="text" id="event-naam" name="Naam van event" placeholder="Bijv. Zomerfestival of Feest" required>
+                            </div>
+
+                            <div class="form-group">
+                                <label for="datum">Datum <span class="req-star">*</span></label>
+                                <input type="date" id="datum" name="Datum" required>
+                            </div>
+
+                            <div class="form-group full-width">
+                                <label for="event-adres">Adres event <span class="req-star">*</span></label>
+                                <input type="text" id="event-adres" name="Adres event" placeholder="Straat, huisnummer, postcode en plaats" required>
+                            </div>
+                        </div>
+
+                        <p class="booking-note"><span>*</span> Verplichte velden</p>
+
+                        <button type="submit" class="btn-booking-submit">
+                            <i class="fas fa-paper-plane"></i> Aanvraag versturen
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
 
     </main>
 
@@ -1779,6 +2076,54 @@
                 }, 160);
             });
         }
+
+        // Popup Modal voor Aanvraag Boeking
+        const openBookingBtn = document.getElementById('openBookingBtn');
+        const closeBookingBtn = document.getElementById('closeBookingBtn');
+        const bookingModal = document.getElementById('bookingModal');
+        const bookingNameInput = document.getElementById('naam');
+
+        function openBookingModal() {
+            if (!bookingModal) return;
+            bookingModal.hidden = false;
+            bookingModal.classList.add('is-open');
+            document.body.style.overflow = 'hidden';
+            if (bookingNameInput) {
+                setTimeout(() => bookingNameInput.focus(), 50);
+            }
+        }
+
+        function closeBookingModal() {
+            if (!bookingModal) return;
+            bookingModal.classList.remove('is-open');
+            bookingModal.hidden = true;
+            document.body.style.overflow = '';
+            if (openBookingBtn) {
+                openBookingBtn.focus();
+            }
+        }
+
+        if (openBookingBtn) {
+            openBookingBtn.addEventListener('click', openBookingModal);
+        }
+
+        if (closeBookingBtn) {
+            closeBookingBtn.addEventListener('click', closeBookingModal);
+        }
+
+        if (bookingModal) {
+            bookingModal.addEventListener('click', (e) => {
+                if (e.target === bookingModal) {
+                    closeBookingModal();
+                }
+            });
+        }
+
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape' && bookingModal && bookingModal.classList.contains('is-open')) {
+                closeBookingModal();
+            }
+        });
 
     </script>
 </body>
