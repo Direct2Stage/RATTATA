@@ -1950,6 +1950,47 @@
             box-shadow: 3px 3px 0 var(--accent-green);
         }
 
+        .btn-booking-submit:disabled {
+            opacity: 0.7;
+            cursor: wait;
+            transform: none;
+        }
+
+        .booking-status-box {
+            display: none;
+            margin-top: 18px;
+            padding: 16px 18px;
+            background-color: var(--bg-black);
+            border: 3px solid var(--accent-green);
+            box-shadow: 5px 5px 0 var(--accent-yellow);
+            font-family: var(--font-mono);
+            font-size: 0.95rem;
+            color: var(--text-white);
+            text-align: center;
+        }
+
+        .booking-status-box.is-visible {
+            display: block;
+        }
+
+        .booking-status-box.is-error {
+            border-color: var(--accent-pink);
+            box-shadow: 5px 5px 0 var(--accent-yellow);
+        }
+
+        .booking-status-box strong {
+            display: block;
+            font-family: var(--font-pixel);
+            font-size: 0.72rem;
+            color: var(--accent-green);
+            margin-bottom: 8px;
+            line-height: 1.5;
+        }
+
+        .booking-status-box.is-error strong {
+            color: var(--accent-pink);
+        }
+
         /* =========================================================
            13. FOOTER
            ========================================================= */
@@ -2592,10 +2633,11 @@
         <div class="booking-body">
             <p class="booking-intro">Wil je RATTATA! op jouw podium, festival of feest? Vul het formulier hieronder in!</p>
 
-            <form class="booking-form" action="https://formsubmit.co/rattata.tribute@gmail.com" method="POST">
-            <!-- Optionele FormSubmit instellingen -->
+            <form class="booking-form" id="bookingForm" action="https://formsubmit.co/ajax/rattata.tribute@gmail.com" method="POST">
+            <!-- FormSubmit AJAX instellingen zodat je op deze pagina blijft -->
             <input type="hidden" name="_subject" value="Nieuwe aanvraag voor een optreden!">
             <input type="hidden" name="_template" value="table">
+            <input type="hidden" name="_captcha" value="false">
 
             <div class="booking-form-grid">
                 <div class="form-group">
@@ -2626,9 +2668,11 @@
 
             <p class="booking-note"><span>*</span> Verplichte velden</p>
 
-            <button type="submit" class="btn-booking-submit">
+            <button type="submit" class="btn-booking-submit" id="bookingSubmitBtn">
                 <i class="fas fa-paper-plane"></i> Aanvraag versturen
             </button>
+
+            <div class="booking-status-box" id="bookingStatusBox" role="status" aria-live="polite"></div>
             </form>
         </div>
         </div>
@@ -2955,8 +2999,68 @@
             }
         }
 
+        const bookingForm = document.getElementById('bookingForm');
+        const bookingSubmitBtn = document.getElementById('bookingSubmitBtn');
+        const bookingStatusBox = document.getElementById('bookingStatusBox');
+
+        if (bookingForm) {
+            bookingForm.addEventListener('submit', async (e) => {
+                e.preventDefault();
+
+                if (bookingStatusBox) {
+                    bookingStatusBox.className = 'booking-status-box';
+                    bookingStatusBox.innerHTML = '';
+                }
+
+                const originalBtnHtml = bookingSubmitBtn ? bookingSubmitBtn.innerHTML : '';
+                if (bookingSubmitBtn) {
+                    bookingSubmitBtn.disabled = true;
+                    bookingSubmitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Bezig met versturen...';
+                }
+
+                try {
+                    const formData = new FormData(bookingForm);
+                    const response = await fetch('https://formsubmit.co/ajax/rattata.tribute@gmail.com', {
+                        method: 'POST',
+                        headers: {
+                            'Accept': 'application/json'
+                        },
+                        body: formData
+                    });
+
+                    const result = await response.json();
+
+                    if (response.ok && (result.success === 'true' || result.success === true)) {
+                        bookingForm.reset();
+                        if (bookingStatusBox) {
+                            bookingStatusBox.className = 'booking-status-box is-visible';
+                            bookingStatusBox.innerHTML = '<strong>★ AANVRAAG VERZONDEN! ★</strong>Bedankt voor je aanvraag! We hebben je bericht ontvangen en nemen zo snel mogelijk contact met je op.';
+                        }
+                    } else {
+                        throw new Error(result.message || 'Verzenden mislukt');
+                    }
+                } catch (err) {
+                    if (bookingStatusBox) {
+                        bookingStatusBox.className = 'booking-status-box is-visible is-error';
+                        bookingStatusBox.innerHTML = '<strong>⚠ VERZENDEN NIET GELUKT</strong>Controleer je internetverbinding of mail direct naar <a href="mailto:rattata.tribute@gmail.com" style="color: var(--accent-yellow);">rattata.tribute@gmail.com</a>.';
+                    }
+                } finally {
+                    if (bookingSubmitBtn) {
+                        bookingSubmitBtn.disabled = false;
+                        bookingSubmitBtn.innerHTML = originalBtnHtml;
+                    }
+                }
+            });
+        }
+
         if (openBookingBtn) {
-            openBookingBtn.addEventListener('click', openBookingModal);
+            openBookingBtn.addEventListener('click', () => {
+                if (bookingStatusBox) {
+                    bookingStatusBox.className = 'booking-status-box';
+                    bookingStatusBox.innerHTML = '';
+                }
+                openBookingModal();
+            });
         }
 
         if (closeBookingBtn) {
