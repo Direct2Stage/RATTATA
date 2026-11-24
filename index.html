@@ -522,36 +522,6 @@
             z-index: 2;
         }
 
-        .tv-osd {
-            position: absolute;
-            top: 12px;
-            left: 12px;
-            right: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            pointer-events: none;
-            z-index: 3;
-            font-family: var(--font-pixel);
-            font-size: 0.62rem;
-            text-shadow: 2px 2px 0 var(--bg-black);
-        }
-
-        .tv-osd-channel {
-            background-color: rgba(13, 13, 13, 0.82);
-            color: var(--accent-green);
-            padding: 5px 8px;
-            border: 2px solid var(--accent-green);
-        }
-
-        .tv-osd-title {
-            background-color: rgba(13, 13, 13, 0.82);
-            color: var(--accent-yellow);
-            padding: 5px 8px;
-            border: 2px solid var(--accent-pink);
-            text-transform: uppercase;
-        }
-
         .tv-static-flash {
             position: absolute;
             inset: 0;
@@ -1544,10 +1514,6 @@
                 <div class="tv-cabinet">
                     <div class="tv-screen-bezel">
                         <div class="tv-screen">
-                            <div class="tv-osd">
-                                <span class="tv-osd-channel" id="tvChannelLabel">CH 01</span>
-                                <span class="tv-osd-title" id="tvVideoLabel">SMOORVERLIEFD.MP4</span>
-                            </div>
                             <div class="tv-static-flash" id="tvStaticFlash" aria-hidden="true"></div>
                             <video id="retroTvVideo" controls playsinline preload="metadata">
                                 <source src="smoorverliefd.mp4" type="video/mp4">
@@ -1786,33 +1752,29 @@
 
         // Oude Beeldbuis TV Kanaalschakelaar
         const tvPlaylist = [
-            { src: 'smoorverliefd.mp4', title: 'SMOORVERLIEFD.MP4', channel: 'CH 01' },
-            { src: 'rattata.mp4', title: 'RATTATA.MP4', channel: 'CH 02' }
+            'smoorverliefd.mp4',
+            'rattata.mp4'
         ];
         let currentTvIndex = 0;
 
         const retroTvVideo = document.getElementById('retroTvVideo');
         const tvNextBtn = document.getElementById('tvNextBtn');
-        const tvChannelLabel = document.getElementById('tvChannelLabel');
-        const tvVideoLabel = document.getElementById('tvVideoLabel');
         const tvChannelDial = document.getElementById('tvChannelDial');
         const tvStaticFlash = document.getElementById('tvStaticFlash');
 
         if (tvNextBtn && retroTvVideo) {
             tvNextBtn.addEventListener('click', () => {
                 currentTvIndex = (currentTvIndex + 1) % tvPlaylist.length;
-                const item = tvPlaylist[currentTvIndex];
+                const nextSrc = tvPlaylist[currentTvIndex];
 
                 // Korte 80's beeldbuis ruis-flits & draaiknop animatie
                 tvStaticFlash.classList.add('active');
                 tvChannelDial.classList.toggle('channel-two', currentTvIndex === 1);
 
                 setTimeout(() => {
-                    retroTvVideo.src = item.src;
+                    retroTvVideo.src = nextSrc;
                     retroTvVideo.load();
                     retroTvVideo.play().catch(() => {});
-                    tvChannelLabel.textContent = item.channel;
-                    tvVideoLabel.textContent = item.title;
                     tvStaticFlash.classList.remove('active');
                 }, 160);
             });
