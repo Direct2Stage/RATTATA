@@ -810,6 +810,43 @@
             letter-spacing: 1px;
         }
 
+        .banner-frame.clickable-logo {
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+        }
+
+        .banner-frame.clickable-logo:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 14px 14px 0 var(--bg-black), 18px 18px 0 var(--accent-green);
+        }
+
+        .banner-frame.clickable-logo.is-playing {
+            border-color: var(--accent-green);
+            box-shadow: 12px 12px 0 var(--bg-black), 16px 16px 0 var(--accent-green);
+        }
+
+        .banner-audio-hint {
+            position: absolute;
+            bottom: -16px;
+            left: 18px;
+            background-color: var(--accent-pink);
+            color: var(--text-white);
+            font-family: var(--font-pixel);
+            font-size: 0.58rem;
+            padding: 5px 10px;
+            border: 3px solid var(--bg-black);
+            box-shadow: 4px 4px 0 var(--accent-green);
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            pointer-events: none;
+        }
+
+        .banner-frame.clickable-logo.is-playing .banner-audio-hint {
+            background-color: var(--accent-green);
+            color: var(--bg-black);
+            box-shadow: 4px 4px 0 var(--accent-pink);
+        }
+
         .banner-img {
             width: 100%;
             height: auto;
@@ -1221,11 +1258,66 @@
             height: auto;
             display: block;
             object-fit: cover;
-            transition: transform 0.3s ease;
+            transition: opacity 0.35s ease, transform 0.3s ease;
+        }
+
+        .single-photo-container img.is-fading {
+            opacity: 0.25;
         }
 
         .vhs-photo-wrapper:hover .single-photo-container img {
             transform: scale(1.015);
+        }
+
+        .vhs-slide-controls {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 12px;
+            padding: 8px 12px;
+            background-color: var(--bg-black);
+            border: 2px solid var(--accent-green);
+        }
+
+        .vhs-slide-btn {
+            background-color: var(--accent-pink);
+            color: var(--text-white);
+            border: 2px solid var(--bg-black);
+            padding: 7px 14px;
+            font-family: var(--font-pixel);
+            font-size: 0.62rem;
+            cursor: pointer;
+            box-shadow: 3px 3px 0 var(--accent-green);
+            transition: all 0.15s ease;
+        }
+
+        .vhs-slide-btn:hover {
+            background-color: var(--accent-yellow);
+            color: var(--bg-black);
+            transform: translate(-1px, -1px);
+            box-shadow: 4px 4px 0 var(--accent-pink);
+        }
+
+        .vhs-slide-dots {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .vhs-dot {
+            width: 12px;
+            height: 12px;
+            background-color: #333333;
+            border: 2px solid var(--accent-yellow);
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .vhs-dot.active {
+            background-color: var(--accent-green);
+            box-shadow: 0 0 8px var(--accent-green);
         }
 
         /* =========================================================
@@ -2262,10 +2354,12 @@
             <line x1="10" y1="105" x2="110" y2="15" stroke="#0d0d0d" stroke-width="5"/>
         </svg>
 
-        <div class="banner-frame">
+        <div class="banner-frame clickable-logo" id="rattataLogoTrigger" role="button" tabindex="0" aria-label="Speel of pauzeer Rattata.wav op de achtergrond" title="Klik om Rattata.wav af te spelen of te pauzeren">
             <div class="banner-badge">STEREO • 1983 EDITION</div>
             <img src="RATTATALOGO.jpg" alt="RATTATA! Doe Maar Experience Banner Logo" class="banner-img" onerror="this.onerror=null; this.src='https://placehold.co/1000x350/ff007f/76e200?text=RATTATA!+Doe+Maar+Experience';">
+            <div class="banner-audio-hint" id="bannerAudioHint">♪ KLIK LOGO VOOR AUDIO</div>
         </div>
+        <audio id="rattataBgAudio" src="Rattata.wav" preload="auto"></audio>
     </header>
 
     <!-- 80's Memphis Accent Divider -->
@@ -2335,19 +2429,24 @@
             </div>
         </section>
 
-        <!-- Media Section: Bandfoto in VHS / 1983 TV Monitor stijl -->
+        <!-- Media Section: Bandfoto Slideshow in VHS / 1983 TV Monitor stijl -->
         <section id="media" class="reveal-item">
             <div class="section-header-wrap">
-                <h2 class="section-title">Foto</h2>
+                <h2 class="section-title">Foto's</h2>
                 <span class="section-tag">CH 03 • VHS HI-FI</span>
             </div>
-            <div class="vhs-photo-wrapper reveal-item">
+            <div class="vhs-photo-wrapper reveal-item" id="vhsSlideshowWrapper">
                 <div class="vhs-hud-top">
                     <span class="vhs-rec"><span class="rec-dot"></span> PLAY ► RATTATA! LIVE</span>
-                    <span class="vhs-timestamp">SP • 19:83:00</span>
+                    <span class="vhs-timestamp" id="vhsSlideCounter">FOTO 1 / 5 • 19:83:00</span>
                 </div>
                 <div class="single-photo-container">
-                    <img src="RATTATA.jpg" alt="RATTATA! Bandfoto" onerror="this.onerror=null; this.src='https://placehold.co/900x500/181818/76e200?text=RATTATA!+Bandfoto';">
+                    <img id="vhsSlideImg" src="foto1.jpg" alt="RATTATA! Foto 1" onerror="this.onerror=null; this.src='https://placehold.co/900x500/181818/76e200?text=RATTATA!+Foto';">
+                </div>
+                <div class="vhs-slide-controls">
+                    <button type="button" class="vhs-slide-btn" id="vhsPrevBtn" aria-label="Vorige foto">◄ VORIGE</button>
+                    <div class="vhs-slide-dots" id="vhsSlideDots" aria-label="Kies foto"></div>
+                    <button type="button" class="vhs-slide-btn" id="vhsNextBtn" aria-label="Volgende foto">VOLGENDE ►</button>
                 </div>
             </div>
         </section>
@@ -2685,7 +2784,7 @@
                             <div class="ttx-sub-media">
                                 <div>
                                     <p class="ttx-c-green" style="margin-bottom:4px;">► BANDFOTO</p>
-                                    <img src="RATTATA.jpg" alt="RATTATA! Bandfoto" onerror="this.onerror=null; this.src='https://placehold.co/600x350/0000cc/ffff00?text=RATTATA!+TELETEKST';">
+                                    <img id="ttxSlideImg" src="foto1.jpg" alt="RATTATA! Bandfoto" onerror="this.onerror=null; this.src='https://placehold.co/600x350/0000cc/ffff00?text=RATTATA!+TELETEKST';">
                                 </div>
                                 <div>
                                     <p class="ttx-c-green" style="margin-bottom:4px;">► VIDEO</p>
@@ -2980,6 +3079,133 @@
         }
 
         setInterval(updateTeletxtClock, 1000);
+
+        // Automatische Foto Slideshow: foto1.jpg -> foto2.jpg -> foto3.jpg -> foto4.jpg -> RATTATA.jpg
+        const bandPhotos = [
+            { src: 'foto1.jpg', alt: 'RATTATA! Foto 1' },
+            { src: 'foto2.jpg', alt: 'RATTATA! Foto 2' },
+            { src: 'foto3.jpg', alt: 'RATTATA! Foto 3' },
+            { src: 'foto4.jpg', alt: 'RATTATA! Foto 4' },
+            { src: 'RATTATA.jpg', alt: 'RATTATA! Bandfoto' }
+        ];
+        let currentPhotoIndex = 0;
+        let photoSlideTimer = null;
+
+        const vhsSlideImg = document.getElementById('vhsSlideImg');
+        const ttxSlideImg = document.getElementById('ttxSlideImg');
+        const vhsSlideCounter = document.getElementById('vhsSlideCounter');
+        const vhsSlideDots = document.getElementById('vhsSlideDots');
+        const vhsPrevBtn = document.getElementById('vhsPrevBtn');
+        const vhsNextBtn = document.getElementById('vhsNextBtn');
+        const vhsSlideshowWrapper = document.getElementById('vhsSlideshowWrapper');
+
+        function renderSlideDots() {
+            if (!vhsSlideDots) return;
+            vhsSlideDots.innerHTML = '';
+            bandPhotos.forEach((photo, idx) => {
+                const dot = document.createElement('button');
+                dot.type = 'button';
+                dot.className = 'vhs-dot' + (idx === currentPhotoIndex ? ' active' : '');
+                dot.setAttribute('aria-label', `Toon ${photo.alt}`);
+                dot.addEventListener('click', () => {
+                    showBandPhoto(idx);
+                    restartPhotoSlideshow();
+                });
+                vhsSlideDots.appendChild(dot);
+            });
+        }
+
+        function showBandPhoto(index) {
+            currentPhotoIndex = (index + bandPhotos.length) % bandPhotos.length;
+            const item = bandPhotos[currentPhotoIndex];
+
+            if (vhsSlideImg) {
+                vhsSlideImg.classList.add('is-fading');
+                setTimeout(() => {
+                    vhsSlideImg.src = item.src;
+                    vhsSlideImg.alt = item.alt;
+                    vhsSlideImg.classList.remove('is-fading');
+                }, 150);
+            }
+            if (ttxSlideImg) {
+                ttxSlideImg.src = item.src;
+                ttxSlideImg.alt = item.alt;
+            }
+            if (vhsSlideCounter) {
+                vhsSlideCounter.textContent = `FOTO ${currentPhotoIndex + 1} / ${bandPhotos.length} • 19:83:00`;
+            }
+            renderSlideDots();
+        }
+
+        function startPhotoSlideshow() {
+            if (photoSlideTimer) clearInterval(photoSlideTimer);
+            photoSlideTimer = setInterval(() => {
+                showBandPhoto(currentPhotoIndex + 1);
+            }, 4000);
+        }
+
+        function restartPhotoSlideshow() {
+            startPhotoSlideshow();
+        }
+
+        if (vhsPrevBtn) {
+            vhsPrevBtn.addEventListener('click', () => {
+                showBandPhoto(currentPhotoIndex - 1);
+                restartPhotoSlideshow();
+            });
+        }
+
+        if (vhsNextBtn) {
+            vhsNextBtn.addEventListener('click', () => {
+                showBandPhoto(currentPhotoIndex + 1);
+                restartPhotoSlideshow();
+            });
+        }
+
+        if (vhsSlideshowWrapper) {
+            vhsSlideshowWrapper.addEventListener('mouseenter', () => {
+                if (photoSlideTimer) clearInterval(photoSlideTimer);
+            });
+            vhsSlideshowWrapper.addEventListener('mouseleave', () => {
+                startPhotoSlideshow();
+            });
+        }
+
+        renderSlideDots();
+        startPhotoSlideshow();
+
+        // Speel of pauzeer Rattata.wav op de achtergrond bij klik op het RATTATALOGO
+        const rattataLogoTrigger = document.getElementById('rattataLogoTrigger');
+        const rattataBgAudio = document.getElementById('rattataBgAudio');
+        const bannerAudioHint = document.getElementById('bannerAudioHint');
+
+        function toggleRattataBgAudio() {
+            if (!rattataBgAudio || !rattataLogoTrigger) return;
+            if (rattataBgAudio.paused) {
+                rattataBgAudio.play().then(() => {
+                    rattataLogoTrigger.classList.add('is-playing');
+                    if (bannerAudioHint) bannerAudioHint.textContent = '❚❚ RATTATA.WAV SPEELT (KLIK = PAUZE)';
+                }).catch(() => {});
+            } else {
+                rattataBgAudio.pause();
+                rattataLogoTrigger.classList.remove('is-playing');
+                if (bannerAudioHint) bannerAudioHint.textContent = '♪ KLIK LOGO VOOR AUDIO';
+            }
+        }
+
+        if (rattataLogoTrigger && rattataBgAudio) {
+            rattataLogoTrigger.addEventListener('click', toggleRattataBgAudio);
+            rattataLogoTrigger.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                    e.preventDefault();
+                    toggleRattataBgAudio();
+                }
+            });
+            rattataBgAudio.addEventListener('ended', () => {
+                rattataLogoTrigger.classList.remove('is-playing');
+                if (bannerAudioHint) bannerAudioHint.textContent = '♪ KLIK LOGO VOOR AUDIO';
+            });
+        }
 
     </script>
 </body>
