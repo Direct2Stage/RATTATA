@@ -3082,11 +3082,11 @@
 
         // Automatische Foto Slideshow: foto1.jpg -> foto2.jpg -> foto3.jpg -> foto4.jpg -> RATTATA.jpg
         const bandPhotos = [
-            { src: 'foto1.jpg', alt: 'RATTATA! Foto 1' },
-            { src: 'foto2.jpg', alt: 'RATTATA! Foto 2' },
-            { src: 'foto3.jpg', alt: 'RATTATA! Foto 3' },
-            { src: 'foto4.jpg', alt: 'RATTATA! Foto 4' },
-            { src: 'RATTATA.jpg', alt: 'RATTATA! Bandfoto' }
+            { candidates: ['foto1.jpg', 'Foto1.jpg', 'FOTO1.jpg', 'foto1.JPG', 'foto1.jpeg', 'foto1.png'], alt: 'RATTATA! Foto 1' },
+            { candidates: ['foto2.jpg', 'Foto2.jpg', 'FOTO2.jpg', 'foto2.JPG', 'foto2.jpeg', 'foto2.png'], alt: 'RATTATA! Foto 2' },
+            { candidates: ['foto3.jpg', 'Foto3.jpg', 'FOTO3.jpg', 'foto3.JPG', 'foto3.jpeg', 'foto3.png'], alt: 'RATTATA! Foto 3' },
+            { candidates: ['foto4.jpg', 'Foto4.jpg', 'FOTO4.jpg', 'foto4.JPG', 'foto4.jpeg', 'foto4.png'], alt: 'RATTATA! Foto 4' },
+            { candidates: ['RATTATA.jpg', 'rattata.jpg', 'RATTATA.JPG', 'rattata.JPG', 'RATTATA.jpeg', 'RATTATA.png'], alt: 'RATTATA! Bandfoto' }
         ];
         let currentPhotoIndex = 0;
         let photoSlideTimer = null;
@@ -3098,6 +3098,22 @@
         const vhsPrevBtn = document.getElementById('vhsPrevBtn');
         const vhsNextBtn = document.getElementById('vhsNextBtn');
         const vhsSlideshowWrapper = document.getElementById('vhsSlideshowWrapper');
+
+        function loadImageWithFallback(imgEl, candidates, altText, fallbackUrl) {
+            if (!imgEl) return;
+            let attempt = 0;
+            imgEl.alt = altText;
+            imgEl.onerror = function () {
+                attempt += 1;
+                if (attempt < candidates.length) {
+                    imgEl.src = candidates[attempt];
+                } else {
+                    imgEl.onerror = null;
+                    imgEl.src = fallbackUrl;
+                }
+            };
+            imgEl.src = candidates[0];
+        }
 
         function renderSlideDots() {
             if (!vhsSlideDots) return;
@@ -3122,14 +3138,22 @@
             if (vhsSlideImg) {
                 vhsSlideImg.classList.add('is-fading');
                 setTimeout(() => {
-                    vhsSlideImg.src = item.src;
-                    vhsSlideImg.alt = item.alt;
+                    loadImageWithFallback(
+                        vhsSlideImg,
+                        item.candidates,
+                        item.alt,
+                        'https://placehold.co/900x500/181818/76e200?text=RATTATA!+Foto'
+                    );
                     vhsSlideImg.classList.remove('is-fading');
                 }, 150);
             }
             if (ttxSlideImg) {
-                ttxSlideImg.src = item.src;
-                ttxSlideImg.alt = item.alt;
+                loadImageWithFallback(
+                    ttxSlideImg,
+                    item.candidates,
+                    item.alt,
+                    'https://placehold.co/600x350/0000cc/ffff00?text=RATTATA!+TELETEKST'
+                );
             }
             if (vhsSlideCounter) {
                 vhsSlideCounter.textContent = `FOTO ${currentPhotoIndex + 1} / ${bandPhotos.length} • 19:83:00`;
@@ -3171,7 +3195,7 @@
             });
         }
 
-        renderSlideDots();
+        showBandPhoto(0);
         startPhotoSlideshow();
 
         // Speel of pauzeer Rattata.wav op de achtergrond bij klik op het RATTATALOGO
