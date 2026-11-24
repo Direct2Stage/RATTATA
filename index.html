@@ -162,7 +162,8 @@
         .nav-left {
             display: flex;
             align-items: center;
-            gap: 15px;
+            gap: 12px;
+            flex-wrap: wrap;
         }
 
         .nav-email {
@@ -191,6 +192,490 @@
             color: var(--bg-black);
             transform: translate(-2px, -2px);
             box-shadow: 6px 6px 0 var(--accent-pink);
+        }
+
+        .teletxt-toggle-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            background-color: var(--bg-black);
+            border: 2px solid var(--accent-yellow);
+            box-shadow: 3px 3px 0 var(--accent-green);
+            padding: 2px;
+            cursor: pointer;
+            transition: transform 0.15s ease, box-shadow 0.15s ease;
+            height: 34px;
+        }
+
+        .teletxt-toggle-btn:hover {
+            transform: translate(-2px, -2px);
+            box-shadow: 5px 5px 0 var(--accent-pink);
+            border-color: var(--accent-green);
+        }
+
+        .teletxt-toggle-btn img {
+            height: 26px;
+            width: auto;
+            display: block;
+            object-fit: contain;
+        }
+
+        /* =========================================================
+           PHILIPS KTV-83 TELETEKST DECODER TV (EXACT ZOALS VOORBEELD)
+           ========================================================= */
+        .teletxt-view {
+            display: none;
+            background-color: #0b0b0b;
+            color: #ffffff;
+            font-family: 'Space Mono', monospace;
+            min-height: 100vh;
+            padding: 18px 14px 40px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body.teletxt-mode > *:not(.teletxt-view):not(#bookingModal):not(.crt-overlay):not(script) {
+            display: none !important;
+        }
+
+        body.teletxt-mode {
+            background: #0b0b0b !important;
+        }
+
+        body.teletxt-mode .teletxt-view {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        /* Donkere matte Philips KTV-83 TV-behuizing */
+        .ktv83-cabinet {
+            width: 100%;
+            max-width: 980px;
+            background: linear-gradient(180deg, #2b2b2b 0%, #222222 50%, #1a1a1a 100%);
+            border: 3px solid #3c3c3c;
+            border-radius: 16px !important;
+            box-shadow:
+                inset 0 2px 1px rgba(255, 255, 255, 0.12),
+                inset 0 -4px 10px rgba(0, 0, 0, 0.8),
+                0 24px 60px rgba(0, 0, 0, 0.95);
+            padding: 16px 22px 14px;
+            position: relative;
+        }
+
+        /* Bovenrand: PHILIPS KTV-83 [TELETEKST DECODER] ... KANAAL 01 • NOS / RATTATA */
+        .ktv83-topbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 2px 6px 12px;
+            font-family: 'Rubik', Arial, sans-serif;
+            font-size: 0.78rem;
+            letter-spacing: 1.5px;
+            color: #b8b8b8;
+        }
+
+        .ktv83-brand-group {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            flex-wrap: wrap;
+        }
+
+        .ktv83-brand-name {
+            font-weight: 700;
+            color: #cfcfcf;
+        }
+
+        .ktv83-decoder-badge {
+            background-color: #141414;
+            border: 1px solid #4a4a4a;
+            color: #d8d8d8;
+            padding: 2px 10px;
+            font-size: 0.72rem;
+            letter-spacing: 1.5px;
+        }
+
+        .ktv83-channel-info {
+            color: #a8a8a8;
+            font-size: 0.75rem;
+            letter-spacing: 1.5px;
+        }
+
+        /* Zwarte diepe CRT-beeldbuis rand rondom het scherm */
+        .ktv83-bezel {
+            background: linear-gradient(160deg, #111111 0%, #070707 100%);
+            border: 14px solid #141414;
+            outline: 2px solid #353535;
+            border-radius: 26px !important;
+            padding: 10px;
+            box-shadow:
+                inset 0 0 28px #000000,
+                0 2px 0 rgba(255, 255, 255, 0.08);
+        }
+
+        /* Het echte glazen 4:3-achtige Teletekst CRT scherm */
+        .ktv83-screen {
+            background-color: #02040a;
+            border-radius: 20px !important;
+            padding: 18px 22px 16px;
+            position: relative;
+            overflow: hidden;
+            min-height: 540px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            box-shadow:
+                inset 0 0 55px rgba(0, 0, 0, 0.92),
+                inset 0 0 18px rgba(0, 120, 255, 0.14);
+        }
+
+        /* Subtiele CRT scanlines & bolling-glans */
+        .ktv83-screen::after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            pointer-events: none;
+            border-radius: 20px !important;
+            background:
+                radial-gradient(ellipse at 50% 10%, rgba(255, 255, 255, 0.07) 0%, transparent 55%),
+                linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.36) 50%);
+            background-size: 100% 100%, 100% 3px;
+            z-index: 5;
+        }
+
+        /* Teletekst Bovenbalk: P100 [RATTATA-TEKST] ... 100 MA 23 NOV 16:27:32 */
+        .ttx-status-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 1.02rem;
+            margin-bottom: 10px;
+            letter-spacing: 0.5px;
+        }
+
+        .ttx-status-left {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .ttx-pnum {
+            color: #ffffff;
+        }
+
+        .ttx-service-tag {
+            background-color: #0000cc;
+            color: #ffffff;
+            padding: 1px 10px;
+        }
+
+        .ttx-status-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ttx-green-num {
+            color: #00ff00;
+        }
+
+        .ttx-clock-text {
+            color: #ffff00;
+        }
+
+        /* Blikvanger Header-blok met Roze/Groene dambordranden + Blauw vlak */
+        .ttx-hero-box {
+            margin-bottom: 12px;
+        }
+
+        .ttx-checker-border {
+            height: 11px;
+            width: 100%;
+            background-image:
+                linear-gradient(90deg, #ff0099 50%, #00e600 50%),
+                linear-gradient(90deg, #00e600 50%, #ff0099 50%);
+            background-size: 24px 5.5px;
+            background-position: 0 0, 0 5.5px;
+            background-repeat: repeat-x;
+        }
+
+        .ttx-hero-inner {
+            background-color: #0000cc;
+            padding: 12px 14px 14px;
+            text-align: center;
+        }
+
+        .ttx-hero-title {
+            font-family: 'Press Start 2P', monospace;
+            font-size: 1.55rem;
+            color: #ffff00;
+            text-shadow: 3px 3px 0 #ff007f;
+            letter-spacing: 3px;
+            margin-bottom: 10px;
+        }
+
+        .ttx-hero-subtitle {
+            display: inline-block;
+            background-color: #d400aa;
+            color: #ffffff;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 0.92rem;
+            padding: 2px 14px;
+            letter-spacing: 1px;
+        }
+
+        /* Cyaan Balk: HOOFDINDEX RATTATA-TEKST */
+        .ttx-section-bar {
+            background-color: #00d8e6;
+            color: #000000;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 1rem;
+            padding: 3px 10px;
+            margin-bottom: 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        /* Teletekst Pagina-inhoud */
+        .ttx-page-panel {
+            display: none;
+            flex-grow: 1;
+            font-family: 'Space Mono', monospace;
+            font-size: 0.98rem;
+            line-height: 1.55;
+        }
+
+        .ttx-page-panel.active {
+            display: block;
+        }
+
+        .ttx-index-list {
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+            margin-bottom: 12px;
+        }
+
+        .ttx-index-row {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 8px;
+            cursor: pointer;
+            padding: 1px 4px;
+            transition: background-color 0.1s ease;
+        }
+
+        .ttx-index-row:hover {
+            background-color: rgba(255, 255, 255, 0.12);
+        }
+
+        .ttx-index-row .ttx-dots {
+            flex-grow: 1;
+            border-bottom: 2px dotted #4a4a4a;
+            margin: 0 6px;
+        }
+
+        .ttx-index-row .ttx-num {
+            color: #ffff00;
+            font-weight: 700;
+            text-decoration: underline;
+        }
+
+        .ttx-c-white { color: #ffffff; font-weight: 700; }
+        .ttx-c-green { color: #00ff00; font-weight: 700; }
+        .ttx-c-yellow { color: #ffff00; font-weight: 700; }
+        .ttx-c-cyan { color: #00ffff; font-weight: 700; }
+
+        .ttx-sub-text {
+            color: #ffffff;
+            margin-bottom: 10px;
+            font-size: 0.94rem;
+        }
+
+        .ttx-sub-box {
+            border: 2px solid #00ffff;
+            padding: 10px 12px;
+            margin-bottom: 10px;
+            background-color: rgba(0, 0, 120, 0.25);
+        }
+
+        .ttx-sub-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 6px 18px;
+            margin-bottom: 10px;
+        }
+
+        .ttx-sub-media {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+            margin-top: 8px;
+        }
+
+        .ttx-sub-media img,
+        .ttx-sub-media video {
+            width: 100%;
+            max-height: 210px;
+            object-fit: cover;
+            border: 2px solid #ffff00;
+            display: block;
+        }
+
+        .ttx-inline-btn {
+            background-color: #00ff00;
+            color: #000000;
+            border: 2px solid #ffffff;
+            padding: 6px 14px;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 0.9rem;
+            cursor: pointer;
+            margin-top: 6px;
+        }
+
+        .ttx-inline-btn:hover {
+            background-color: #ffff00;
+        }
+
+        /* Magenta Mailbalk: MAIL: rattata.tribute@gmail.com */
+        .ttx-mail-bar {
+            background-color: #d400aa;
+            color: #ffffff;
+            text-align: center;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 0.96rem;
+            padding: 4px 10px;
+            margin-top: 10px;
+            margin-bottom: 6px;
+        }
+
+        .ttx-mail-bar a {
+            color: #ffffff;
+            text-decoration: none;
+        }
+
+        .ttx-mail-bar a:hover {
+            text-decoration: underline;
+        }
+
+        /* Blauwe promptbalk: TYP PAGINANR OF KLIK ... 1/1 */
+        .ttx-prompt-bar {
+            background-color: #0000cc;
+            color: #ffff00;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 0.92rem;
+            padding: 3px 10px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .ttx-prompt-bar .ttx-page-frac {
+            color: #ffffff;
+        }
+
+        /* Fastext 4 gekleurde sneltoetsen onderaan het scherm */
+        .ttx-fastext-bar {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 0.95rem;
+            text-align: center;
+        }
+
+        .ttx-fastext-btn {
+            border: none;
+            padding: 5px 4px;
+            font-family: 'Space Mono', monospace;
+            font-weight: 700;
+            font-size: 0.92rem;
+            cursor: pointer;
+            text-transform: uppercase;
+        }
+
+        .ttx-fastext-btn.ft-red { background-color: #cc0000; color: #ffffff; }
+        .ttx-fastext-btn.ft-green { background-color: #00cc00; color: #000000; }
+        .ttx-fastext-btn.ft-yellow { background-color: #e6e600; color: #000000; }
+        .ttx-fastext-btn.ft-cyan { background-color: #00d8e6; color: #000000; }
+
+        .ttx-fastext-btn:hover {
+            filter: brightness(1.15);
+        }
+
+        /* Onderrand van de Philips TV: Luidsprekersleuven links + Groene LED + Knop "terug naar normaal" rechts */
+        .ktv83-bottombar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 12px;
+            padding: 12px 8px 2px;
+        }
+
+        .ktv83-speaker-grille {
+            width: 110px;
+            height: 22px;
+            background: repeating-linear-gradient(
+                90deg,
+                #0d0d0d 0px,
+                #0d0d0d 3px,
+                transparent 3px,
+                transparent 8px
+            );
+        }
+
+        .ktv83-power-controls {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .ktv83-green-led {
+            width: 11px;
+            height: 11px;
+            border-radius: 50% !important;
+            background-color: #22ff22;
+            box-shadow: 0 0 8px #22ff22, inset 0 0 2px #ffffff;
+            display: inline-block;
+        }
+
+        .btn-ktv83-normal {
+            background: linear-gradient(180deg, #3a3a3a 0%, #242424 100%);
+            color: #f0f0f0;
+            border: 2px solid #111111;
+            border-top-color: #5a5a5a;
+            border-radius: 4px !important;
+            padding: 6px 14px;
+            font-family: 'Rubik', Arial, sans-serif;
+            font-weight: 700;
+            font-size: 0.78rem;
+            letter-spacing: 0.8px;
+            text-transform: uppercase;
+            cursor: pointer;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.7);
+            transition: all 0.15s ease;
+        }
+
+        .btn-ktv83-normal:hover {
+            background: #ffff00;
+            color: #000000;
+            border-color: #ffff00;
         }
 
         .nav-links {
@@ -1181,7 +1666,7 @@
             position: fixed;
             inset: 0;
             background-color: rgba(13, 13, 13, 0.88);
-            z-index: 2000;
+            z-index: 9998;
             display: none;
             align-items: center;
             justify-content: center;
@@ -1438,9 +1923,65 @@
                 padding: 12px 15px;
             }
 
+            .nav-left {
+                gap: 8px;
+            }
+
             .nav-email {
-                font-size: 0.72rem;
+                font-size: 0.68rem;
                 padding: 5px 8px;
+            }
+
+            .teletxt-toggle-btn {
+                height: 30px;
+            }
+
+            .teletxt-toggle-btn img {
+                height: 22px;
+            }
+
+            .ktv83-cabinet {
+                padding: 10px 10px 12px;
+                border-radius: 12px !important;
+            }
+
+            .ktv83-bezel {
+                border-width: 8px;
+                padding: 6px;
+                border-radius: 18px !important;
+            }
+
+            .ktv83-screen {
+                padding: 12px 10px;
+                min-height: auto;
+                border-radius: 14px !important;
+            }
+
+            .ttx-hero-title {
+                font-size: 1.05rem;
+            }
+
+            .ttx-hero-subtitle {
+                font-size: 0.72rem;
+            }
+
+            .ttx-status-row,
+            .ttx-page-panel,
+            .ttx-prompt-bar {
+                font-size: 0.75rem;
+            }
+
+            .ttx-fastext-bar {
+                grid-template-columns: repeat(2, 1fr);
+            }
+
+            .ttx-sub-grid,
+            .ttx-sub-media {
+                grid-template-columns: 1fr;
+            }
+
+            .ktv83-speaker-grille {
+                width: 65px;
             }
 
             .mobile-menu-btn {
@@ -1685,6 +2226,9 @@
                     <i class="fas fa-envelope"></i>
                     <span>rattata.tribute@gmail.com</span>
                 </a>
+                <button type="button" class="teletxt-toggle-btn" id="openTeletxtBtn" title="Bekijk in Teletekst" aria-label="Open Teletekst weergave">
+                    <img src="teletxt.jpg" alt="Teletekst" onerror="this.onerror=null; this.src='https://placehold.co/64x32/0000ff/ffff00?text=TT+101';">
+                </button>
             </div>
 
             <button class="mobile-menu-btn" id="menuToggle" aria-label="Menu">
@@ -1873,7 +2417,7 @@
             </div>
             <div class="bio-grid">
                 <div class="bio-text reveal-item">
-                    <p><strong>RATTATA! (voorheen Toe Maar Experience)</strong> is een tienkoppige Doe Maar-tribute band uit Noord-Brabant en omstreken, opgericht in september 2025 door Enzo Smit, die samen één missie delen: de energie, het gevoel en de unieke sound van Doe Maar opnieuw tot leven brengen — groter, voller en dynamischer dan ooit.</p>
+                    <p><strong>RATTATA! </strong> is een tienkoppige Doe Maar-tribute band uit Noord-Brabant en omstreken, opgericht in september 2025 door Enzo Smit, die samen één missie delen: de energie, het gevoel en de unieke sound van Doe Maar opnieuw tot leven brengen — groter, voller en dynamischer dan ooit.</p>
                     
                     <p>Met een repertoire aan hits brengt <strong>RATTATA!</strong> zowel de iconische klassiekers als de minder bekende parels. De band speelt single-versies, live-versies en zorgvuldig uitgewerkte arrangementen die het origineel respecteren maar live nóg beter werken.</p>
 
@@ -1933,61 +2477,63 @@
             </div>
         </section>
 
-        <!-- Popup Modal: Aanvraag Optreden -->
-        <div class="booking-modal-overlay" id="bookingModal" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle" hidden>
-            <div class="booking-card">
-                <div class="booking-topbar">
-                    <span id="bookingModalTitle">★ AANVRAAG BOEKING // RATTATA!</span>
-                    <button type="button" class="btn-close-booking" id="closeBookingBtn" aria-label="Sluit venster">
-                        SLUITEN [X]
-                    </button>
-                </div>
-                <div class="booking-body">
-                    <p class="booking-intro">Wil je RATTATA! op jouw podium, festival of feest? Vul het formulier hieronder in!</p>
 
-                    <form class="booking-form" action="https://formsubmit.co/rattata.tribute@gmail.com" method="POST">
-                        <!-- Optionele FormSubmit instellingen -->
-                        <input type="hidden" name="_subject" value="Nieuwe aanvraag voor een optreden!">
-                        <input type="hidden" name="_template" value="table">
-
-                        <div class="booking-form-grid">
-                            <div class="form-group">
-                                <label for="naam">Naam <span class="req-star">*</span></label>
-                                <input type="text" id="naam" name="Naam" placeholder="Jouw voor- en achternaam" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="mailadres">Mailadres <span class="req-star">*</span></label>
-                                <input type="email" id="mailadres" name="email" placeholder="naam@voorbeeld.nl" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="event-naam">Naam van event <span class="req-star">*</span></label>
-                                <input type="text" id="event-naam" name="Naam van event" placeholder="Bijv. Zomerfestival of Feest" required>
-                            </div>
-
-                            <div class="form-group">
-                                <label for="datum">Datum <span class="req-star">*</span></label>
-                                <input type="date" id="datum" name="Datum" required>
-                            </div>
-
-                            <div class="form-group full-width">
-                                <label for="event-adres">Adres event <span class="req-star">*</span></label>
-                                <input type="text" id="event-adres" name="Adres event" placeholder="Straat, huisnummer, postcode en plaats" required>
-                            </div>
-                        </div>
-
-                        <p class="booking-note"><span>*</span> Verplichte velden</p>
-
-                        <button type="submit" class="btn-booking-submit">
-                            <i class="fas fa-paper-plane"></i> Aanvraag versturen
-                        </button>
-                    </form>
-                </div>
-            </div>
-        </div>
 
     </main>
+
+    <!-- Popup Modal: Aanvraag Optreden -->
+    <div class="booking-modal-overlay" id="bookingModal" role="dialog" aria-modal="true" aria-labelledby="bookingModalTitle" hidden>
+        <div class="booking-card">
+        <div class="booking-topbar">
+            <span id="bookingModalTitle">★ AANVRAAG BOEKING // RATTATA!</span>
+            <button type="button" class="btn-close-booking" id="closeBookingBtn" aria-label="Sluit venster">
+            SLUITEN [X]
+            </button>
+        </div>
+        <div class="booking-body">
+            <p class="booking-intro">Wil je RATTATA! op jouw podium, festival of feest? Vul het formulier hieronder in!</p>
+
+            <form class="booking-form" action="https://formsubmit.co/rattata.tribute@gmail.com" method="POST">
+            <!-- Optionele FormSubmit instellingen -->
+            <input type="hidden" name="_subject" value="Nieuwe aanvraag voor een optreden!">
+            <input type="hidden" name="_template" value="table">
+
+            <div class="booking-form-grid">
+                <div class="form-group">
+                <label for="naam">Naam <span class="req-star">*</span></label>
+                <input type="text" id="naam" name="Naam" placeholder="Jouw voor- en achternaam" required>
+                </div>
+
+                <div class="form-group">
+                <label for="mailadres">Mailadres <span class="req-star">*</span></label>
+                <input type="email" id="mailadres" name="email" placeholder="naam@voorbeeld.nl" required>
+                </div>
+
+                <div class="form-group">
+                <label for="event-naam">Naam van event <span class="req-star">*</span></label>
+                <input type="text" id="event-naam" name="Naam van event" placeholder="Bijv. Zomerfestival of Feest" required>
+                </div>
+
+                <div class="form-group">
+                <label for="datum">Datum <span class="req-star">*</span></label>
+                <input type="date" id="datum" name="Datum" required>
+                </div>
+
+                <div class="form-group full-width">
+                <label for="event-adres">Adres event <span class="req-star">*</span></label>
+                <input type="text" id="event-adres" name="Adres event" placeholder="Straat, huisnummer, postcode en plaats" required>
+                </div>
+            </div>
+
+            <p class="booking-note"><span>*</span> Verplichte velden</p>
+
+            <button type="submit" class="btn-booking-submit">
+                <i class="fas fa-paper-plane"></i> Aanvraag versturen
+            </button>
+            </form>
+        </div>
+        </div>
+    </div>
 
     <!-- 80's Memphis Accent Divider -->
     <div class="retro-bar"></div>
@@ -1997,6 +2543,213 @@
         <p>&copy; 2026 RATTATA! Doe Maar Experience. Alle rechten voorbehouden.</p>
         <div class="footer-badge">★ EVEN TERUG NAAR '83 ★</div>
     </footer>
+
+
+    <!-- TELETEKST WEERGAVE IN PHILIPS KTV-83 BEELDBUIS TV -->
+    <div class="teletxt-view" id="teletxtView" aria-label="Philips KTV-83 Teletekst Decoder">
+        <div class="ktv83-cabinet">
+            <!-- Bovenrand van de Philips TV -->
+            <div class="ktv83-topbar">
+                <div class="ktv83-brand-group">
+                    <span class="ktv83-brand-name">PHILIPS KTV-83</span>
+                    <span class="ktv83-decoder-badge">TELETEKST DECODER</span>
+                </div>
+                <div class="ktv83-channel-info">KANAAL 01 &bull; NOS / RATTATA</div>
+            </div>
+
+            <!-- Zwarte Beeldbuis-rand & Scherm -->
+            <div class="ktv83-bezel">
+                <div class="ktv83-screen">
+                    <div>
+                        <!-- Bovenste Teletekst Statusregel -->
+                        <div class="ttx-status-row">
+                            <div class="ttx-status-left">
+                                <span class="ttx-pnum" id="ttxTopPage">P100</span>
+                                <span class="ttx-service-tag">RATTATA-TEKST</span>
+                            </div>
+                            <div class="ttx-status-right">
+                                <span class="ttx-green-num" id="ttxInputBuffer">100</span>
+                                <span class="ttx-clock-text" id="ttClock">MA 23 NOV 16:27:32</span>
+                            </div>
+                        </div>
+
+                        <!-- RATTATA! Roze/Groen/Blauw Teletekst Headerblok -->
+                        <div class="ttx-hero-box">
+                            <div class="ttx-checker-border"></div>
+                            <div class="ttx-hero-inner">
+                                <div class="ttx-hero-title">RATTATA!</div>
+                                <div class="ttx-hero-subtitle">DOE MAAR EXPERIENCE &bull; EVEN TERUG NAAR '83!</div>
+                            </div>
+                            <div class="ttx-checker-border"></div>
+                        </div>
+
+                        <!-- Cyaan Sectiebalk -->
+                        <div class="ttx-section-bar">
+                            <span id="ttxSectionHeading">HOOFDINDEX RATTATA-TEKST</span>
+                            <span id="ttxHomeHint" style="cursor:pointer; text-decoration:underline; display:none;" data-ttx-goto="100">[100 INDEX]</span>
+                        </div>
+
+                        <!-- PAGINA 100: HOOFDINDEX -->
+                        <div class="ttx-page-panel active" data-ttx-page="100" data-ttx-title="HOOFDINDEX RATTATA-TEKST">
+                            <ul class="ttx-index-list">
+                                <li class="ttx-index-row" data-ttx-goto="101">
+                                    <span class="ttx-c-white">NIEUWS &amp; UPDATES</span>
+                                    <span class="ttx-dots"></span>
+                                    <span class="ttx-num">101</span>
+                                </li>
+                                <li class="ttx-index-row" data-ttx-goto="200">
+                                    <span class="ttx-c-green">LIVE AGENDA &amp; TOURDATA 2027</span>
+                                    <span class="ttx-dots"></span>
+                                    <span class="ttx-num">200</span>
+                                </li>
+                                <li class="ttx-index-row" data-ttx-goto="300">
+                                    <span class="ttx-c-white">OVER DE BAND</span>
+                                    <span class="ttx-dots"></span>
+                                    <span class="ttx-num">300</span>
+                                </li>
+                                <li class="ttx-index-row" data-ttx-goto="301">
+                                    <span class="ttx-c-green">BANDBEZETTING</span>
+                                    <span class="ttx-dots"></span>
+                                    <span class="ttx-num">301</span>
+                                </li>
+                                <li class="ttx-index-row" data-ttx-goto="400">
+                                    <span class="ttx-c-white">MEDIA: BANDFOTO &amp; VIDEO</span>
+                                    <span class="ttx-dots"></span>
+                                    <span class="ttx-num">400</span>
+                                </li>
+                                <li class="ttx-index-row" data-ttx-goto="500">
+                                    <span class="ttx-c-green">VOLG RATTATA!</span>
+                                    <span class="ttx-dots"></span>
+                                    <span class="ttx-num">500</span>
+                                </li>
+                                <li class="ttx-index-row" data-ttx-goto="600" data-ttx-open-booking="true">
+                                    <span class="ttx-c-yellow">BOEKINGEN &amp; CONTACT</span>
+                                    <span class="ttx-dots"></span>
+                                    <span class="ttx-num">600</span>
+                                </li>
+                            </ul>
+                        </div>
+
+                        <!-- PAGINA 101: NIEUWS & UPDATES -->
+                        <div class="ttx-page-panel" data-ttx-page="101" data-ttx-title="NIEUWS &amp; UPDATES">
+                            <div class="ttx-sub-box">
+                                <p class="ttx-c-yellow" style="margin-bottom:6px;">NAAMSVERANDERING NAAR RATTATA! — NOVEMBER 2025</p>
+                                <p class="ttx-sub-text" style="margin-bottom:0;">
+                                    Met trots maken we bekend dat de bandnaam is veranderd van Toe Maar Experience naar <span class="ttx-c-green">RATTATA!</span>. Dit werd feestelijk onthuld op 7 november tijdens onze show in Café Taverne in Tilburg.
+                                </p>
+                            </div>
+                            <p class="ttx-sub-text"><span class="ttx-c-cyan">►</span> Meer weten? Ga naar <span class="ttx-c-yellow" style="cursor:pointer;text-decoration:underline;" data-ttx-goto="200">P200 Agenda</span> of <span class="ttx-c-yellow" style="cursor:pointer;text-decoration:underline;" data-ttx-goto="100">P100 Hoofdindex</span>.</p>
+                        </div>
+
+                        <!-- PAGINA 200: LIVE AGENDA & TOURDATA -->
+                        <div class="ttx-page-panel" data-ttx-page="200" data-ttx-title="LIVE AGENDA &amp; TOURDATA 2027">
+                            <div class="ttx-sub-box">
+                                <p class="ttx-c-yellow">19 FEB 2027 — <span class="ttx-c-green">KIM'S KROEG</span> — Tilburg</p>
+                                <p class="ttx-sub-text">Aanvang: 21:00 uur &bull; <a href="https://kimskroeg.nl/" target="_blank" rel="noopener noreferrer" class="ttx-c-cyan">kimskroeg.nl</a></p>
+                            </div>
+                            <div class="ttx-sub-box">
+                                <p class="ttx-c-yellow">26 JUN 2027 — <span class="ttx-c-green">CAFÉ TAVERNE</span> — Tilburg</p>
+                                <p class="ttx-sub-text" style="margin-bottom:0;">Aanvang: 21:00 uur &bull; <a href="https://www.cafetavernetilburg.nl/" target="_blank" rel="noopener noreferrer" class="ttx-c-cyan">cafetavernetilburg.nl</a></p>
+                            </div>
+                        </div>
+
+                        <!-- PAGINA 300: OVER DE BAND -->
+                        <div class="ttx-page-panel" data-ttx-page="300" data-ttx-title="OVER DE BAND — BIOGRAFIE">
+                            <p class="ttx-sub-text">
+                                <span class="ttx-c-yellow">RATTATA! (voorheen Toe Maar Experience)</span> is een tienkoppige Doe Maar-tribute band uit Noord-Brabant en omstreken, opgericht in september 2025 door Enzo Smit.
+                            </p>
+                            <p class="ttx-sub-text">
+                                Met iconische klassiekers én minder bekende parels in zorgvuldig uitgewerkte arrangementen. De blazerssectie vormt het herkenbare hart van de Nederpop-sound, ondersteund door ritmesectie, keys en gitaar.
+                            </p>
+                            <p class="ttx-sub-text"><span class="ttx-c-green">► Zie pagina <span style="cursor:pointer;text-decoration:underline;" data-ttx-goto="301">301</span> voor alle 10 bandleden.</span></p>
+                        </div>
+
+                        <!-- PAGINA 301: BANDBEZETTING -->
+                        <div class="ttx-page-panel" data-ttx-page="301" data-ttx-title="BANDBEZETTING">
+                            <div class="ttx-sub-grid">
+                                <div><span class="ttx-c-cyan">JOHAR</span> ....... <span class="ttx-c-yellow">LEADZANG</span></div>
+                                <div><span class="ttx-c-cyan">SEBAS</span> ....... <span class="ttx-c-yellow">LEADZANG</span></div>
+                                <div><span class="ttx-c-cyan">SILVAN</span> ...... <span class="ttx-c-yellow">GITAAR</span></div>
+                                <div><span class="ttx-c-cyan">ENZO</span> ........ <span class="ttx-c-yellow">BASGITAAR</span></div>
+                                <div><span class="ttx-c-cyan">MICHAEL</span> ..... <span class="ttx-c-yellow">KEYS</span></div>
+                                <div><span class="ttx-c-cyan">HANS</span> ........ <span class="ttx-c-yellow">DRUMS</span></div>
+                                <div><span class="ttx-c-cyan">KIKI</span> ........ <span class="ttx-c-yellow">BACKING VOCALS</span></div>
+                                <div><span class="ttx-c-cyan">LAURAINE</span> .... <span class="ttx-c-yellow">BACKING VOCALS</span></div>
+                                <div><span class="ttx-c-cyan">ELLEMIEKE</span> ... <span class="ttx-c-yellow">TROMBONE</span></div>
+                                <div><span class="ttx-c-cyan">LIEKE</span> ....... <span class="ttx-c-yellow">TROMPET</span></div>
+                            </div>
+                        </div>
+
+                        <!-- PAGINA 400: MEDIA -->
+                        <div class="ttx-page-panel" data-ttx-page="400" data-ttx-title="MEDIA: BANDFOTO &amp; VIDEO">
+                            <div class="ttx-sub-media">
+                                <div>
+                                    <p class="ttx-c-green" style="margin-bottom:4px;">► BANDFOTO</p>
+                                    <img src="RATTATA.jpg" alt="RATTATA! Bandfoto" onerror="this.onerror=null; this.src='https://placehold.co/600x350/0000cc/ffff00?text=RATTATA!+TELETEKST';">
+                                </div>
+                                <div>
+                                    <p class="ttx-c-green" style="margin-bottom:4px;">► VIDEO</p>
+                                    <video controls playsinline preload="metadata">
+                                        <source src="smoorverliefd.mp4" type="video/mp4">
+                                    </video>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- PAGINA 500: SOCIALS -->
+                        <div class="ttx-page-panel" data-ttx-page="500" data-ttx-title="VOLG RATTATA! OP SOCIAL MEDIA">
+                            <div class="ttx-sub-box">
+                                <p class="ttx-c-yellow" style="margin-bottom:8px;">CONNECT MET DE BAND:</p>
+                                <p class="ttx-sub-text">&bull; FACEBOOK: <a href="https://www.facebook.com/profile.php?id=61586258830806&locale=nl_NL" target="_blank" rel="noopener noreferrer" class="ttx-c-cyan">RATTATA! Facebook Pagina</a></p>
+                                <p class="ttx-sub-text" style="margin-bottom:0;">&bull; INSTAGRAM: <a href="https://www.instagram.com/rattata_doemaarexperience/" target="_blank" rel="noopener noreferrer" class="ttx-c-cyan">@rattata_doemaarexperience</a></p>
+                            </div>
+                        </div>
+
+                        <!-- PAGINA 600: BOEKINGEN & CONTACT -->
+                        <div class="ttx-page-panel" data-ttx-page="600" data-ttx-title="BOEKINGEN &amp; CONTACT">
+                            <div class="ttx-sub-box">
+                                <p class="ttx-c-yellow" style="margin-bottom:6px;">WIL JE RATTATA! OP JOUW PODIUM, FESTIVAL OF FEEST?</p>
+                                <p class="ttx-sub-text">Direct boeken of een aanvraag indienen kan via het boekingsformulier:</p>
+                                <button type="button" class="ttx-inline-btn" id="ttOpenBookingBtn">
+                                    ► AANVRAAG BOEKING OPENEN
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Onderkant van het Teletekst-scherm -->
+                    <div>
+                        <div class="ttx-mail-bar">
+                            <a href="mailto:rattata.tribute@gmail.com">MAIL: rattata.tribute@gmail.com</a>
+                        </div>
+
+                        <div class="ttx-prompt-bar">
+                            <span>TYP PAGINANR (100-600) OF KLIK</span>
+                            <span class="ttx-page-frac" id="ttxPageFraction">1/1</span>
+                        </div>
+
+                        <div class="ttx-fastext-bar">
+                            <button type="button" class="ttx-fastext-btn ft-red" data-ttx-goto="101">101 NIEUWS</button>
+                            <button type="button" class="ttx-fastext-btn ft-green" data-ttx-goto="200">200 AGENDA</button>
+                            <button type="button" class="ttx-fastext-btn ft-yellow" data-ttx-goto="300">300 DE BAND</button>
+                            <button type="button" class="ttx-fastext-btn ft-cyan" data-ttx-goto="600" data-ttx-open-booking="true">600 CONTACT</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Onderrand van de Philips KTV-83 TV -->
+            <div class="ktv83-bottombar">
+                <div class="ktv83-speaker-grille" aria-hidden="true"></div>
+                <div class="ktv83-power-controls">
+                    <span class="ktv83-green-led" aria-hidden="true"></span>
+                    <button type="button" class="btn-ktv83-normal" id="backToNormalBtn">
+                        terug naar normaal
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
 
     <!-- Scripts -->
     <script>
@@ -2124,6 +2877,109 @@
                 closeBookingModal();
             }
         });
+
+        // Teletekst Weergave Toggle & KTV-83 Paginanavigatie
+        const openTeletxtBtn = document.getElementById('openTeletxtBtn');
+        const backToNormalBtn = document.getElementById('backToNormalBtn');
+        const ttOpenBookingBtn = document.getElementById('ttOpenBookingBtn');
+        const ttClock = document.getElementById('ttClock');
+        const ttxTopPage = document.getElementById('ttxTopPage');
+        const ttxInputBuffer = document.getElementById('ttxInputBuffer');
+        const ttxSectionHeading = document.getElementById('ttxSectionHeading');
+        const ttxHomeHint = document.getElementById('ttxHomeHint');
+        const ttxPanels = document.querySelectorAll('.ttx-page-panel');
+
+        const nlDays = ['ZO', 'MA', 'DI', 'WO', 'DO', 'VR', 'ZA'];
+        const nlMonths = ['JAN', 'FEB', 'MRT', 'APR', 'MEI', 'JUN', 'JUL', 'AUG', 'SEP', 'OKT', 'NOV', 'DEC'];
+
+        function updateTeletxtClock() {
+            if (!ttClock) return;
+            const now = new Date();
+            const dayName = nlDays[now.getDay()];
+            const dayNum = String(now.getDate()).padStart(2, '0');
+            const monthName = nlMonths[now.getMonth()];
+            const hh = String(now.getHours()).padStart(2, '0');
+            const mm = String(now.getMinutes()).padStart(2, '0');
+            const ss = String(now.getSeconds()).padStart(2, '0');
+            ttClock.textContent = `${dayName} ${dayNum} ${monthName} ${hh}:${mm}:${ss}`;
+        }
+
+        function showTtxPage(pageNum) {
+            const target = document.querySelector(`.ttx-page-panel[data-ttx-page="${pageNum}"]`);
+            if (!target) return;
+            ttxPanels.forEach(p => p.classList.remove('active'));
+            target.classList.add('active');
+            if (ttxTopPage) ttxTopPage.textContent = `P${pageNum}`;
+            if (ttxInputBuffer) ttxInputBuffer.textContent = pageNum;
+            if (ttxSectionHeading) {
+                ttxSectionHeading.textContent = target.getAttribute('data-ttx-title') || 'RATTATA-TEKST';
+            }
+            if (ttxHomeHint) {
+                ttxHomeHint.style.display = (pageNum === '100') ? 'none' : 'inline';
+            }
+        }
+
+        document.querySelectorAll('[data-ttx-goto]').forEach(el => {
+            el.addEventListener('click', () => {
+                const targetPage = el.getAttribute('data-ttx-goto');
+                showTtxPage(targetPage);
+                if (el.hasAttribute('data-ttx-open-booking')) {
+                    openBookingModal();
+                }
+            });
+        });
+
+        // Typ 3 cijfers (bijv. 100, 101, 200, 300, 301, 400, 500, 600) op het toetsenbord in Teletekst-modus
+        let typedDigits = '';
+        document.addEventListener('keydown', (e) => {
+            if (!document.body.classList.contains('teletxt-mode')) return;
+            if (bookingModal && bookingModal.classList.contains('is-open')) return;
+            if (/^[0-9]$/.test(e.key)) {
+                typedDigits += e.key;
+                if (ttxInputBuffer) {
+                    ttxInputBuffer.textContent = typedDigits.padEnd(3, '-');
+                }
+                if (typedDigits.length === 3) {
+                    const code = typedDigits;
+                    typedDigits = '';
+                    const exists = document.querySelector(`.ttx-page-panel[data-ttx-page="${code}"]`);
+                    if (exists) {
+                        showTtxPage(code);
+                        if (code === '600') {
+                            openBookingModal();
+                        }
+                    } else {
+                        setTimeout(() => {
+                            if (ttxTopPage && ttxInputBuffer) {
+                                ttxInputBuffer.textContent = ttxTopPage.textContent.replace('P', '');
+                            }
+                        }, 400);
+                    }
+                }
+            }
+        });
+
+        if (openTeletxtBtn) {
+            openTeletxtBtn.addEventListener('click', () => {
+                document.body.classList.add('teletxt-mode');
+                showTtxPage('100');
+                updateTeletxtClock();
+                window.scrollTo(0, 0);
+            });
+        }
+
+        if (backToNormalBtn) {
+            backToNormalBtn.addEventListener('click', () => {
+                document.body.classList.remove('teletxt-mode');
+                window.scrollTo(0, 0);
+            });
+        }
+
+        if (ttOpenBookingBtn) {
+            ttOpenBookingBtn.addEventListener('click', openBookingModal);
+        }
+
+        setInterval(updateTeletxtClock, 1000);
 
     </script>
 </body>
